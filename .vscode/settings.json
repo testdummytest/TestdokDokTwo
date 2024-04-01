@@ -1,0 +1,9 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.maven.downloadSources": true,
+    "java.import.maven.disableTestClasspathFlag": true,
+    "java.import.maven.offline.enabled": true,
+    "java.configuration.maven.userSettings": "",
+    "maven.terminal.useJavaHome": true,
+    "maven.pomfile.autoUpdateEffectivePOM": true
+}

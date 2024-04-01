@@ -1,0 +1,24 @@
+[2024-04-01 10:24:14][info][setup] - URL is: https://stage.docdok.ch/
+[2024-04-01 10:24:34][info][shouldVerifyThatTheAdminCanCreateClinicsSuccessfully] - Admin login success
+[2024-04-01 10:24:36][info][clickOnClinicsPageSideTab] - CLINIC clicked
+[2024-04-01 10:24:39][info][clickOnCreateClinicBtn] - Success CLINIC popup opens
+[2024-04-01 10:24:42][info][fillFieldsForClinic] - AutomationClinic
+[2024-04-01 10:24:56][info][createClinicByDoctor] - Successfully filled the clinic name..
+[2024-04-01 10:25:11][info][createClinicByDoctor] - SUCCESSFULLY CREATED CLINIC AND LOGGED OUT FROM ADMIN
+[2024-04-01 10:32:24][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 10:39:52][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 10:44:40][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:01:26][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:04:43][info][setup] - URL is: https://stage.docdok.ch/
+[2024-04-01 11:22:07][info][setup] - URL is: https://stage.docdok.ch/
+[2024-04-01 11:30:09][info][setup] - URL is: https://stage.docdok.ch/
+[2024-04-01 11:36:43][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:43:05][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:54:58][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:55:00][info][takeScreenshot] - Screenshot saved: C:\Users\Hp\Documents\docdok\testing-automation\Screenshot\shouldVerifyThatTheMonthlyWeeklyAndDailyViewsLookLikeTheyShouldBe20240401-115500.png
+[2024-04-01 11:55:51][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:57:31][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 11:59:40][info][setup] - URL is: https://stage.docdok.ch/
+[2024-04-01 12:03:29][info][setup] - URL is: https://stage.docdok.ch/
+[2024-04-01 12:15:56][info][setup] - URL is: https://qa.dev.docdok.ch/
+[2024-04-01 12:18:39][info][loginAsUser] - Welcome not shown 
