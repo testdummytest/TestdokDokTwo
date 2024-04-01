@@ -25,15 +25,13 @@ jobs:
     
     # Add a step to list the contents of the directory for debugging
     - name: List Directory Contents
-      run: ls -l target/surefire-reports
-    - name: Create Screenshot directory
-      run: mkdir -p target/surefire-reports/Screenshot
+      run: ls -l
     - name: Upload Screenshots
       if: always()
       uses: actions/upload-artifact@v2
       with:
         name: screenshots
-        path: target/surefire-reports/Screenshot
+        path: "**/Screenshot"
 
     # Send mail
     - name: Send mail
