@@ -1,0 +1,45 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B surefire-report:report
+    
+    # Add a step to list the contents of the directory for debugging
+    - name: List Directory Contents
+      if: always()
+      run: ls -l target/surefire-reports
+    
+    # Add email sending action with if condition
+    - name: Send mail
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        secure: true
+        username: automationmail92@gmail.com
+        password: cujcugsjdxgdkqxf
+        subject: Github Actions job result
+        to: dummytestt15@gmail.com
+        from: automationmail92@gmail.com
+        body: Build job of  completed successfully!
+        html_body: file://target/surefire-reports/emailable-report.html
+        attachments: target/surefire-reports/emailable-report.html
