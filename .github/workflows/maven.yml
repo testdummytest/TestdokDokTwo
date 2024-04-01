@@ -27,13 +27,13 @@ jobs:
     - name: List Directory Contents
       run: ls -l target/surefire-reports
     - name: Create Screenshot directory
-      run: mkdir -p Screenshot
+      run: mkdir -p target/surefire-reports/Screenshot
     - name: Upload Screenshots
       if: always()
       uses: actions/upload-artifact@v2
       with:
         name: screenshots
-        path: Screenshot
+        path: target/surefire-reports/Screenshot
 
     # Send mail
     - name: Send mail
