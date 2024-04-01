@@ -10,7 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      Denv: "-Denv=STAGE"
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -20,7 +21,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B surefire-report:report
+      run: mvn -B surefire-report:report ${{ env.Denv }}
     
     # Add a step to list the contents of the directory for debugging
     - name: List Directory Contents
