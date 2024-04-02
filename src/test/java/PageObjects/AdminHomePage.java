@@ -32,7 +32,6 @@ public class AdminHomePage extends BasePage{
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(70));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
         driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
-        logger.info("clicked");
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 500);");
