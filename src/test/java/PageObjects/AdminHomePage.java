@@ -36,7 +36,7 @@ public class AdminHomePage extends BasePage{
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, 500);");
 
-        waitFewSeconds(4000);
+        waitFewSeconds(2000);
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss213')]")));
         driver.findElement(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss213')]")).click();
