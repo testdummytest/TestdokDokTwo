@@ -80,6 +80,22 @@ public class AdminHomePage extends BasePage{
         }
     }
 
+    public void clinicSelectAndBlock(Admin admin) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(70));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
+        driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
+        logger.info("clicked");
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0, 500);");
+
+        waitFewSeconds(4000);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss255')]")));
+        driver.findElement(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss255')]")).click();
+        logger.info("Clicked on dropdown");
+    }
 
     public void clickOnClinicsPageSideTab() {
         try {
