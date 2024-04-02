@@ -40,7 +40,7 @@ public class AdminHomePage extends BasePage{
         waitFewSeconds(4000);
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss213')]")));
-        driver.findElement(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss255')]")).click();
+        driver.findElement(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss213')]")).click();
         logger.info("Clicked on dropdown");
     }
 
