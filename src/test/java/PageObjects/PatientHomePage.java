@@ -13,6 +13,7 @@ import org.testng.Assert;
 import Entities.Admin;
 import Entities.Doctor;
 import Entities.Patient;
+import Framework.Generate;
 import UiRegressionTests.loggersetup;
 import java.util.logging.Logger;
 
@@ -92,11 +93,11 @@ public class PatientHomePage extends BasePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         wait.until(
                 ExpectedConditions
-                        .visibilityOfElementLocated(By.xpath("//a[text()=\"Passwort vergessen?\"]//parent::span")));
-        driver.findElement(By.xpath("//a[text()=\"Passwort vergessen?\"]//parent::span")).click();
+                        .visibilityOfElementLocated(By.xpath("//a[text()=\"Forgot Password?\"]//parent::span")));
+        driver.findElement(By.xpath("//a[text()=\"Forgot Password?\"]//parent::span")).click();
         logger.info("Clicked on Forgot password link");
         driver.findElement(By.id("username")).sendKeys(email);
-        driver.findElement(By.xpath("//button[text()=\"Absenden\"]")).click();
+        driver.findElement(By.xpath("//button[text()=\"Submit\"]")).click();
         logger.info("Click on Submit");
         loginAsUser(admin.getEmail(), admin.getPassword());
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()=\"Patients\"])[1]")));
@@ -117,6 +118,31 @@ public class PatientHomePage extends BasePage {
         assert driver.findElement(By.xpath("(//span[text()=\"SEND_RESET_PASSWORD\"])[1]")).isDisplayed();
         logger.info("Send reset password is displayed");
 
+    }
+
+    public void verifyPatientChatDisabled(Patient patient) {
+
+        assert driver.findElement(By.xpath("//*[text()='This clinic has not enabled patient messaging']")).isDisplayed();
+        logger.info("Patient's chat has been successfully disabled!!");
+        logoutFromUser();
+        logger.info("Logged out from patient");
+    }
+
+    public void verifyPatientChatEnabled(Patient patient) {
+
+        assert driver.findElement(By.xpath("(//*[text()='Conversation is read write for the patient'])[last()]")).isDisplayed();
+        sendMessageToPatient();
+    }
+
+    public void sendMessageToPatient() {
+        String sample_text = Generate.todayDate();
+        fillTextById(sample_text, "chat-input");
+        WebElement sendButton = driver.findElement(By.id("send-button"));
+        click(sendButton);
+        logger.info("sent msg to the doctor, Patient's chat has been successfully enabled!!");
+        assert driver.findElement(By.xpath("//span//div[text()='"+sample_text+"']")).isDisplayed();
+        logoutFromUser();
+        logger.info("Logged out from patient");
     }
 
 }

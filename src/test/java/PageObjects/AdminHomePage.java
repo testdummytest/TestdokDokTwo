@@ -27,21 +27,6 @@ public class AdminHomePage extends BasePage{
         super(driver);
     }
 
-    public void clinicSelectAndBlock(Admin admin) {
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(70));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
-        driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0, 500);");
-
-        waitFewSeconds(2000);
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss213')]")));
-        driver.findElement(By.xpath("//*[contains(@class, 'jss65') and contains(@class, 'jss213')]")).click();
-        logger.info("Clicked on dropdown");
-    }
 
     public void createAssistantByTheAdmin(Admin admin) {
 
@@ -94,6 +79,65 @@ public class AdminHomePage extends BasePage{
             logger.info("Error in clicking Team btn");
         }
     }
+
+    public void selectClinictDisableChat(Admin admin) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
+        driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
+        driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
+
+        try{
+            assert driver.findElement(By.xpath("//*[@data-test='sync-disable']")).isDisplayed();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Enable/Disable Chat')]")));
+            waitFewSeconds(2000);
+            driver.findElement(By.xpath("//span[contains(text(), 'Enable/Disable Chat')]")).click();
+            logger.info("Clicked on a Disable chat");
+            waitFewSeconds(2000);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
+            driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='sync-enable']")));
+            assert driver.findElement(By.xpath("//*[@data-test='sync-enable']")).isDisplayed();
+            logger.info("Chat disabled successfully");
+
+        }catch(Exception e){
+            logger.info("Clinic is already disabled");
+        }
+        driver.navigate().refresh();
+        logoutFromUser();
+    }
+
+    public void selectClinicEnableChat(Admin admin) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
+        driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
+        driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
+
+        try{
+            assert driver.findElement(By.xpath("//*[@data-test='sync-enable']")).isDisplayed();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Enable/Disable Chat')]")));
+            waitFewSeconds(2000);
+            driver.findElement(By.xpath("//span[contains(text(), 'Enable/Disable Chat')]")).click();
+            logger.info("Clicked on a Disable chat");
+            waitFewSeconds(2000);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
+            driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='sync-disable']")));
+            assert driver.findElement(By.xpath("//*[@data-test='sync-disable']")).isDisplayed();
+            logger.info("Chat enabled successfully");
+
+        }catch(Exception e){
+            logger.info("Clinic is already enabled");
+        }
+        driver.navigate().refresh();
+        logoutFromUser();
+        logger.info("Logged out from admin 2nd time");
+        
+    }
+
 
     public void clickOnClinicsPageSideTab() {
         try {
@@ -156,7 +200,7 @@ public class AdminHomePage extends BasePage{
         setChildMobileNumber(admin.getChildMobileNumber());
         setChildEmail(admin.getChildEmail());
         setChildLanguage();
-        setClinicdocassistant();
+        setClinicDocAssistant();
     }
 
     private void fillMandatoryFieldsForDoctorPhysician(Admin admin) {
@@ -315,11 +359,11 @@ public class AdminHomePage extends BasePage{
 
 
     //for clinic
-    private void setClinicdocassistant() {
+    private void setClinicDocAssistant() {
         WebElement clinicButton = driver.findElement(By.id("createMpa-clinicId"));
         WebElement clinic = clinicButton.findElement(By.xpath("preceding-sibling::div[1]"));
         click(clinic);
-        WebElement selectclinicButton = driver.findElement(By.xpath("(//*[text()='UsB Clinic'])[1]"));
+        WebElement selectclinicButton = driver.findElement(By.xpath("(//*[text()='00 Automation Clinic'])"));
         click(selectclinicButton);
     }//end
 
@@ -328,7 +372,7 @@ public class AdminHomePage extends BasePage{
         WebElement clinicButton = driver.findElement(By.id("createPhysician-clinicId"));
         WebElement clinic = clinicButton.findElement(By.xpath("preceding-sibling::div[1]"));
         click(clinic);
-        WebElement selectclinicButton = driver.findElement(By.xpath("(//*[text()='UsB Clinic'])[1]"));
+        WebElement selectclinicButton = driver.findElement(By.xpath("(//*[text()='00 Automation Clinic'])"));
         click(selectclinicButton);
     }//end
 

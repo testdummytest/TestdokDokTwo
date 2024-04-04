@@ -21,7 +21,7 @@ public class SendAppInvitationToPatientTests extends ChLoginBaseTest {
     private static final Logger logger = loggersetup.getLogger();
  
     //used for send app invitation to patient by doctor
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheDoctorSendAppInvitationToPatient(Patient patient, Admin admin, Doctor doctor) {
         
         LoginPage loginPage = new LoginPage(driver);
@@ -36,7 +36,7 @@ public class SendAppInvitationToPatientTests extends ChLoginBaseTest {
     }//end
 
     //used for send app invitation to patient by admin
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheAdminSendAppInvitationToPatient(Patient patient, Admin admin, Doctor doctor) {
         
         LoginPage loginPage = new LoginPage(driver);
@@ -52,7 +52,7 @@ public class SendAppInvitationToPatientTests extends ChLoginBaseTest {
 
 
     //used for send invitation to the Users tab user by admin
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheAdminSendAppInvitationToUsersTabUser(Patient patient, Admin admin, Doctor doctor) {
         
         LoginPage loginPage = new LoginPage(driver);
@@ -69,7 +69,7 @@ public class SendAppInvitationToPatientTests extends ChLoginBaseTest {
 
 
     //used for check if app activated then disabled send invitation
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatDoctorNotSendAppInvitationToPatientWhichPatientAppActivated(Patient patient, Admin admin, Doctor doctor) {
         
         LoginPage loginPage = new LoginPage(driver);

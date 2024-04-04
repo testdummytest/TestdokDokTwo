@@ -19,7 +19,7 @@ public class CreatePatientTests extends ChLoginBaseTest {
 
     private static final Logger logger = loggersetup.getLogger();
 
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheDoctorCanCreatePatientSuccessfully(Patient patient, Admin admin, Doctor doctor) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);
@@ -32,7 +32,7 @@ public class CreatePatientTests extends ChLoginBaseTest {
         patientHomePage.verifyThatTheUserLoggedInSuccessfully();
     }
 
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatThePatientResetPasswordSuccessfully(Patient patient, Admin admin, Doctor doctor) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);
@@ -46,7 +46,7 @@ public class CreatePatientTests extends ChLoginBaseTest {
         patientHomePage.verifyThatTheUserLoggedInSuccessfully();
         patientHomePage.forgotpasswordbyPatient(patient, admin, doctor, email);
     }
-    // @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    // @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     // public void shouldVerifyThatTheDoctorCanCreatePatientSuccessfullyWithSMSCode(Patient patient, Admin admin, Doctor doctor) {
     //     LoginPage loginPage = new LoginPage(driver);
     //     loginPage.loginAsDoctor(doctor);

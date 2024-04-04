@@ -21,7 +21,7 @@ public class ApiPatientProxyTests extends ChLoginBaseTest {
         // RestAssured.baseURI = "https://qa.dev.docdok.ch";
 
         // Define the JSON payload
-        String jsonBody = "{\"class\":\"PATIENT_PROXY\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"childcheck\",\"birthdate\":\"1995-01-08T00:30:00.000Z\",\"email\":\""+DataProviderClass.getRandomEmailForSaluta()+"\",\"mobileNumber\":\"+"+DataProviderClass.getRandomMobileNumber()+"\",\"salutation\":\"Mrs\",\"type\":\"PATIENTPROXIED\",\"gender\":\"FEMALE\",\"langKey\":\"en\",\"proxy\":{\"salutation\":\"Mr\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"Parentproxy\",\"gender\":\"MALE\"}}";
+        String jsonBody = "{\"class\":\"PATIENT_PROXY\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"childcheck\",\"birthdate\":\"1995-01-08T00:30:00.000Z\",\"email\":\""+DataProviderClass.getRandomEmailforAutomation()+"\",\"mobileNumber\":\"+"+DataProviderClass.getRandomMobileNumber()+"\",\"salutation\":\"Mrs\",\"type\":\"PATIENTPROXIED\",\"gender\":\"FEMALE\",\"langKey\":\"en\",\"proxy\":{\"salutation\":\"Mr\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"Parentproxy\",\"gender\":\"MALE\"}}";
         APIsPage apiPage = new APIsPage(driver);
 
         RestAssured.given()

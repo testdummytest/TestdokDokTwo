@@ -12,7 +12,7 @@ import UiRegressionTests.ChLoginBaseTest;
 
 public class DeleteNonActivePatientByDoctorTests extends ChLoginBaseTest {
 
-    @Test(dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void createPatientAndDeleteNonActivePatientByDoctor(Patient patient, Admin admin, Doctor doctor) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);

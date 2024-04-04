@@ -12,7 +12,7 @@ import UiRegressionTests.ChLoginBaseTest;
 
 
 public class DoctorsHomeScreenTests extends ChLoginBaseTest {
-    @Test(alwaysRun=true,dataProvider = "create-saluta-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(alwaysRun=true,dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyTappingOnEachFeatureShouldNavigateToRespectiveScreens(Patient patient, Admin admin,
             Doctor doctor) {
         LoginPage loginPage = new LoginPage(driver);

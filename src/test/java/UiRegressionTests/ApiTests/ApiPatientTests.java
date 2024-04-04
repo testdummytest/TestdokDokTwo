@@ -21,7 +21,7 @@ public class ApiPatientTests extends ChLoginBaseTest {
         // RestAssured.baseURI = "https://qa.dev.docdok.ch";
 
         // Define the JSON payload
-        String jsonBody = "{\"class\":\"PATIENT\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"345\",\"birthdate\":\"1998-01-08T00:30:00.000Z\",\"email\":\""+DataProviderClass.getRandomEmailForSaluta()+"\",\"mobileNumber\":\"+"+DataProviderClass.getRandomMobileNumber()+"\",\"salutation\":\"Mr\",\"type\":\"PATIENTSELF\",\"gender\":\"MALE\",\"langKey\":\"en\"}";
+        String jsonBody = "{\"class\":\"PATIENT\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"345\",\"birthdate\":\"1998-01-08T00:30:00.000Z\",\"email\":\""+DataProviderClass.getRandomEmailforAutomation()+"\",\"mobileNumber\":\"+"+DataProviderClass.getRandomMobileNumber()+"\",\"salutation\":\"Mr\",\"type\":\"PATIENTSELF\",\"gender\":\"MALE\",\"langKey\":\"en\"}";
         APIsPage apiPage = new APIsPage(driver);
 
         RestAssured.given()

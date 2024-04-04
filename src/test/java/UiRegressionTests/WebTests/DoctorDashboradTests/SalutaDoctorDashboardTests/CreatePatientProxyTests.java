@@ -20,7 +20,7 @@ public class CreatePatientProxyTests extends ChLoginBaseTest {
     private static final Logger logger = loggersetup.getLogger();
 
     //used for a child patient
-    @Test(dataProvider = "create-saluta-child-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "create-child-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheDoctorCanCreateChildPatientSuccessfully(Patient patient, Admin admin, Doctor doctor) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);

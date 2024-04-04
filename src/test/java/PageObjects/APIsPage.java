@@ -29,8 +29,8 @@ public class APIsPage extends BasePage{
         request.header("Content-Type", "application/x-www-form-urlencoded").
                 formParam("grant_type", "password").
                 formParam("client_id", "browser").
-                formParam("username", DataProviderClass.SalutaDoctorUname).
-                formParam("password", DataProviderClass.SalutaDoctorPass);
+                formParam("username", DataProviderClass.DoctorUname).
+                formParam("password", DataProviderClass.DoctorPass);
 
         Response response = request.post("/auth/realms/docdok/protocol/openid-connect/token");
 //        response.prettyPrint();
@@ -78,13 +78,16 @@ public class APIsPage extends BasePage{
 
     public int getSurveysNumber() {
         DataProviderClass.getEnvUrl();
-        baseURI = DataProviderClass.ApiUrl;
+        baseURI = DataProviderClass.EnvUrl;
         // baseURI = "https://auth-qa.dev.docdok.ch";
         RequestSpecification request = given();
+        DataProviderClass.getProperties();
+        // String patientId = DataProviderClass.PatientId;
         request.header("Authorization","Bearer "+getTokenGeneratedByPassword());
-        Response response = request.get("/rest/survey/api/patients/PAT-dfd92a77-69e4-48ca-a0e5-4d27a4ec992d/survey-definitions/");
-//        response.prettyPrint();
-        int surveysSent = response.path("find{it.name == 'Gesundheitsfragebogen final'}.nbSent");
+        Response response = request.get("/rest/survey/api/patients/"+DataProviderClass.PatientId+"/survey-definitions");
+        // response.prettyPrint();
+        // int surveysSent = response.path("find.nbSent");
+        int surveysSent = response.path("find{it.name == '"+DataProviderClass.SurveyName+"'}.nbSent");
         return surveysSent;
     }
 }

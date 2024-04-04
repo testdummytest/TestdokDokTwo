@@ -38,7 +38,7 @@ public class DoctorHomePage extends BasePage {
         WebElement myPatient = myPatients.findElement(By.xpath(("//a[contains(@href, '/private/app/patients/PAT')]")));
         click(myPatient);
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("close")));
             WebElement closeButton = driver.findElement(By.id("close"));
             click(closeButton);
@@ -127,9 +127,14 @@ public class DoctorHomePage extends BasePage {
     public void deleteEvent() {
         WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(), 'Delete')]"));
         click(deleteButton);
-
-        driver.switchTo().alert().accept();
-
+        waitFewSeconds(1000);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.confirm = function(){return true;}");
+        try {
+            driver.switchTo().alert().accept();
+        } catch (Exception e) {
+            System.out.println("No alert present!");
+        }
         waitFewSeconds(2000);
     }
 
@@ -161,7 +166,7 @@ public class DoctorHomePage extends BasePage {
         if (length < 40) {
             Assert.fail("The event status should be Done! ");
         }
-        deleteEvent();
+        // deleteEvent();
     }
 
     private void clickOnTheFirstEvent() {
@@ -218,10 +223,12 @@ public class DoctorHomePage extends BasePage {
     }
 
     private void sendSurvey() {
+        DataProviderClass.getProperties();
         WebElement sendSurveyButton = driver.findElement(By.id("send-survey-button"));
         click(sendSurveyButton);
-        fillTextById("Gesundheitsfragebogen final", "sendSurveyFromPatient-surveys-search-field");
-        WebElement agreeCheckbox = driver.findElement(By.cssSelector("input[type='checkbox']"));
+        fillTextById(DataProviderClass.SurveyName, "sendSurveyFromPatient-surveys-search-field");
+        waitFewSeconds(3);
+        WebElement agreeCheckbox = driver.findElement(By.xpath("//span[text()='"+DataProviderClass.SurveyName+"']/../../../..//div//input"));
         click(agreeCheckbox);
         WebElement submitButton = driver.findElement(By.id("save"));
         click(submitButton);

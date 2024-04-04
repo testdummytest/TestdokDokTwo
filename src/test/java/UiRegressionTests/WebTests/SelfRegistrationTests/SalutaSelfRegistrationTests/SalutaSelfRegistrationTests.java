@@ -12,7 +12,7 @@ import PageObjects.TestingUtilPage;
 import UiRegressionTests.SalutaBaseTest;
 
 public class SalutaSelfRegistrationTests extends SalutaBaseTest {
-    @Test(enabled = false, dataProvider = "create-saluta-patient-by-self-Registration-data", dataProviderClass = DataProviderClass.class)
+    @Test(enabled = false, dataProvider = "create-patient-by-self-Registration-data", dataProviderClass = DataProviderClass.class)
     public void createPatient(Patient patient, Admin admin) {
         SalutaSelfRegistrationPage salutaSelfRegistrationPage = new SalutaSelfRegistrationPage(driver);
         salutaSelfRegistrationPage.fillFieldsForCreatePatient(patient);

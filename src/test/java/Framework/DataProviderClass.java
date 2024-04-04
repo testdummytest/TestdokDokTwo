@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.DataProvider;
 
@@ -12,12 +15,14 @@ import Entities.Admin;
 import Entities.Doctor;
 import Entities.Patient;
 import java.util.Properties; 
+import java.util.Base64;
+
 
 public class DataProviderClass {
     public static String AdminUname;
     public static String AdminPass;
-    public static String SalutaDoctorUname;
-    public static String SalutaDoctorPass;
+    public static String DoctorUname;
+    public static String DoctorPass;
     public static String HycareDoctorUname;
     public static String HycareDoctorPass;
     public static String MobileHycareDoctorUname;
@@ -31,6 +36,11 @@ public class DataProviderClass {
     public static String radioBtnId;
     public static String activationUrlUtilityPage;
     public static String ClinicId;
+    public static String PatientId;
+    public static String SurveyName;
+
+    private static final String AES_ALGORITHM = "AES";
+    private static final String SECRET_KEY = "abcd123456789012";
 
     public static void getProperties() {
         Properties prop = new Properties();
@@ -41,36 +51,46 @@ public class DataProviderClass {
             if("QA".equals(getEnvName)){
                 
                 AdminUname = prop.getProperty("qaadminUsername");
-                AdminPass = prop.getProperty("qaadminPassword");
-                SalutaDoctorUname = prop.getProperty("qaSalutadoctorUsername");
-                SalutaDoctorPass = prop.getProperty("qaSalutadoctorPassword");
+                String TempAdminPass = prop.getProperty("qaadminPassword");
+                AdminPass = decrypt(TempAdminPass);
+                DoctorUname = prop.getProperty("qadoctorUsername");
+                String TempDoctorPass = prop.getProperty("qadoctorPassword");
+                DoctorPass = decrypt(TempDoctorPass);
                 HycareDoctorUname = prop.getProperty("qaHycaredoctorUsername");
                 HycareDoctorPass = prop.getProperty("qaHycaredoctorPassword");
                 MobileHycareDoctorUname = prop.getProperty("qaHycaredoctorUsernameMobile");
                 MobileHycareDoctorPass = prop.getProperty("qaHycaredoctorPasswordMobile");
                 PatientUname = prop.getProperty("qapatientUsername");
-                PatientPass = prop.getProperty("qapatientPassword");
+                String TempPatientPass = prop.getProperty("qapatientPassword");
+                PatientPass = decrypt(TempPatientPass);
                 MobilePatientUname = prop.getProperty("qapatientUsernameMobile");
                 MobilePatientPass = prop.getProperty("qapatientPasswordMobile");
                 ClinicId = prop.getProperty("qaClinicId");
+                PatientId = prop.getProperty("qaPatientId");
+                SurveyName = prop.getProperty("qaSurvey");
 
             
             }
             else if("STAGE".equals(getEnvName)){
                 
                 AdminUname = prop.getProperty("stageadminUsername");
-                AdminPass = prop.getProperty("stageadminPassword");
-                SalutaDoctorUname = prop.getProperty("stageSalutadoctorUsername");
-                SalutaDoctorPass = prop.getProperty("stageSalutadoctorPassword");
+                String TempAdminPass = prop.getProperty("stageadminPassword");
+                AdminPass = decrypt(TempAdminPass);
+                DoctorUname = prop.getProperty("stagedoctorUsername");
+                String TempDoctorPass = prop.getProperty("stagedoctorPassword");
+                DoctorPass = decrypt(TempDoctorPass);
                 HycareDoctorUname = prop.getProperty("stageHycaredoctorUsername");
                 HycareDoctorPass = prop.getProperty("stageHycaredoctorPassword");
                 MobileHycareDoctorUname = prop.getProperty("stageHycaredoctorUsernameMobile");
                 MobileHycareDoctorPass = prop.getProperty("stageHycaredoctorPasswordMobile");
                 PatientUname = prop.getProperty("stagepatientUsername");
-                PatientPass = prop.getProperty("stagepatientPassword");
+                String TempPatientPass = prop.getProperty("stagepatientPassword");
+                PatientPass = decrypt(TempPatientPass);
                 MobilePatientUname = prop.getProperty("stagepatientUsernameMobile");
                 MobilePatientPass = prop.getProperty("stagepatientPasswordMobile");
                 ClinicId = prop.getProperty("stageClinicId");
+                PatientId = prop.getProperty("stagePatientId");
+                SurveyName = prop.getProperty("stageSurvey");
 
 
             }
@@ -118,6 +138,17 @@ public class DataProviderClass {
         }
     }
 
+    public static String decrypt(String encryptedValue)  {
+        try{
+            SecretKeySpec keySpec = new SecretKeySpec(SECRET_KEY.getBytes(), AES_ALGORITHM);
+            Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec);
+            byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedValue));
+            return new String(decryptedBytes);
+        }catch(Exception e){
+            return null;
+            }
+    }
 
     public static String getRandomMobileNumber() {
         Random rand = new Random();
@@ -139,8 +170,8 @@ public class DataProviderClass {
         return String.format("%s_%s", UUID.randomUUID().toString().substring(0, 5), System.currentTimeMillis() / 1000);
     }
 
-    public static String getRandomEmailForSaluta() {
-        return String.format("%s@%s", getUniqueId(), "saluta.ch");
+    public static String getRandomEmailforAutomation() {
+        return String.format("%s@%s", getUniqueId(), "automation.ch");
     }
 
     public static String getRandomEmailForVinzenz() {
@@ -151,10 +182,10 @@ public class DataProviderClass {
         return String.format("%s@%s", getUniqueId(), "HyCare.ch");
     }
 
-    @DataProvider(name = "create-saluta-patient-by-self-Registration-data")
-    public static Object[][] getSalutaPatientData() {
+    @DataProvider(name = "create-patient-by-self-Registration-data")
+    public static Object[][] getPatientData() {
         getProperties(); // Load properties
-        Object patient = new Patient("automation", "test", Generate.date(25), getRandomEmailForSaluta(),
+        Object patient = new Patient("automation", "test", Generate.date(25), getRandomEmailforAutomation(),
                 getRandomMobileNumber(), "12345678", "12345678", "12345678");
         Object admin = new Admin(AdminUname, AdminPass);
         return new Object[][] { { patient, admin } };
@@ -179,20 +210,20 @@ public class DataProviderClass {
     @DataProvider(name = "login-doctor-And-patient-data")
     public static Object[][] getLoginDoctorAndPatientData() {
         getProperties(); // Load properties
-        Object doctor = new Doctor(SalutaDoctorUname, SalutaDoctorPass);
+        Object doctor = new Doctor(DoctorUname, DoctorPass);
          // Object patient = new Patient("patient@saluta.tests");
          Object patient = new Patient(PatientUname);
 
         return new Object[][] { { doctor, patient } };
     }
 
-    @DataProvider(name = "create-saluta-patient-by-doctor-data")
-    public static Object[][] getSalutaPatientDataByDoctor() {
+    @DataProvider(name = "create-patient-by-doctor-data")
+    public static Object[][] getPatientDataByDoctor() {
         getProperties(); // Load properties
-        Object patient = new Patient("automation", "test", Generate.date(25), getRandomEmailForSaluta(),
+        Object patient = new Patient("automation", "test", Generate.date(25), getRandomEmailforAutomation(),
                 "+" + getRandomMobileNumber(), "12345678", "12345678", "12345678");
         Object admin = new Admin(AdminUname, AdminPass);
-        Object doctor = new Doctor(SalutaDoctorUname, SalutaDoctorPass);
+        Object doctor = new Doctor(DoctorUname, DoctorPass);
         return new Object[][] { { patient, admin, doctor } };
     }
 
@@ -208,34 +239,34 @@ public class DataProviderClass {
 
 
     //new saluta for a child patient
-    @DataProvider(name = "create-saluta-child-patient-by-doctor-data")
-    public static Object[][] getSalutaChildPatientDataByDoctor() {
+    @DataProvider(name = "create-child-patient-by-doctor-data")
+    public static Object[][] getChildPatientDataByDoctor() {
         getProperties(); // Load properties
 
         Object patient = new Patient("latestautomation", "test", Generate.date(25),"SALUTATIONS","FIRSTCHILDNAMEONE","LASTCHILDNAMEONE","+" + getRandomMobileNumber(),getRandomEmailForHyCare(),"12345678","12345678","12345678");
         Object admin = new Admin(AdminUname, AdminPass);
-        Object doctor = new Doctor(SalutaDoctorUname, SalutaDoctorPass);
+        Object doctor = new Doctor(DoctorUname, DoctorPass);
         return new Object[][] { { patient, admin, doctor } };
     }//end
     //new for a doctor assistant
     @DataProvider(name = "create-doctor-assistant-by-admin")
-    public static Object[][] getSalutaDcotorAssistantData() {
+    public static Object[][] getDcotorAssistantData() {
         getProperties(); // Load properties
 
         Object patient = new Patient("latestautomation", "test", Generate.date(25),"SALUTATIONS","FIRSTCHILDNAMEONE","LASTCHILDNAMEONE","+" + getRandomMobileNumber(),getRandomEmailForHyCare(),"12345678","12345678","12345678");
         Object admin = new Admin(AdminUname, AdminPass,"ADr.","ASSisDOC","testt","+" + getRandomMobileNumber(),getRandomEmailForHyCare());
-        Object doctor = new Doctor(SalutaDoctorUname, SalutaDoctorPass,"12345678","12345678");
+        Object doctor = new Doctor(DoctorUname, DoctorPass,"12345678","12345678");
         return new Object[][] { { patient, admin, doctor } };
     }//end
     
     //new for a physician-doctor
     @DataProvider(name = "create-doctor-physician-by-admin")
-    public static Object[][] getSalutaDoctorPhysicianData() {
+    public static Object[][] getDoctorPhysicianData() {
         getProperties(); // Load properties
 
         Object patient = new Patient("latestautomation", "test", Generate.date(25),"SALUTATIONS","FIRSTCHILDNAMEONE","LASTCHILDNAMEONE","+" + getRandomMobileNumber(),getRandomEmailForHyCare(),"12345678","12345678","12345678");
         Object admin = new Admin(AdminUname, AdminPass,"PHISIO","PHISIOFour","lasttest","+" + getRandomMobileNumber(),getRandomEmailForHyCare());
-        Object doctor = new Doctor(SalutaDoctorUname, SalutaDoctorPass,"12345678","12345678");
+        Object doctor = new Doctor(DoctorUname, DoctorPass,"12345678","12345678");
         return new Object[][] { { patient, admin, doctor } };
     }//end
 
@@ -256,10 +287,19 @@ public class DataProviderClass {
 
      //new for admin create clinic
      @DataProvider(name = "create-clinic-by-admin")
-     public static Object[][] getSalutaClinicData() {
+     public static Object[][] getClinicData() {
         getProperties(); // Load properties
  
          Object admin = new Admin(AdminUname, AdminPass,"AutomationClinic","+" + getRandomMobileNumber(),"ClinicStreetTwo","888","AhmedabadISAH","111","");
          return new Object[][] { { admin } };
      }//end
+
+     @DataProvider(name = "existing-admin-doctor-patient")
+    public static Object[][] getExistingAdminDoctorPatientData() {
+        getProperties(); // Load properties
+        Object admin = new Admin(AdminUname, AdminPass,"PHISIO","PHISIOFour","lasttest","+" + getRandomMobileNumber(),getRandomEmailForHyCare());
+        Object patient = new Patient(PatientUname,PatientPass);
+        Object doctor = new Doctor(DoctorUname, DoctorPass,"12345678","12345678");
+        return new Object[][] { { admin, patient, doctor } };
+    }
 }

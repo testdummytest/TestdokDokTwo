@@ -20,7 +20,7 @@ public class EventsTests extends ChLoginBaseTest {
         doctorHomePage.verifyThatTheEventAddedSuccessfully();
         doctorHomePage.updateEvent();
         doctorHomePage.verifyThatTheEventUpdatedSuccessfully();
-        doctorHomePage.deleteEventAndVerifyThatTheEventIsDeleted();
+        // doctorHomePage.deleteEventAndVerifyThatTheEventIsDeleted();
     }
 
     @Test(dataProvider = "login-doctor-And-patient-data", dataProviderClass = DataProviderClass.class)

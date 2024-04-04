@@ -70,7 +70,9 @@ public class BasePage {
         WebElement element = driver.findElement(By.id(el));
         click(element);
         element.clear();
+        waitFewSeconds(1);
         element.sendKeys(text);
+        waitFewSeconds(2);
     }
 
     public void fillTextByClassName(String text, String el) {

@@ -19,7 +19,7 @@ public class ApiDoctorTests extends ChLoginBaseTest {
         RestAssured.baseURI = DataProviderClass.EnvUrl;
         // RestAssured.baseURI = "https://qa.dev.docdok.ch";
         // Define the JSON payload
-        String jsonBody = "{\"salutation\":\"Mr\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"QA12\",\"gender\":\"MALE\",\"mobileNumber\":\"+"+DataProviderClass.getRandomMobileNumber()+"\",\"email\":\""+DataProviderClass.getRandomEmailForSaluta()+"\",\"langKey\":\"en\",\"clinicId\":\""+DataProviderClass.ClinicId+"\",\"class\":\"PHYSICIAN\"}";
+        String jsonBody = "{\"salutation\":\"Mr\",\"firstName\":\""+DataProviderClass.getUniqueId()+"\",\"lastName\":\"QA12\",\"gender\":\"MALE\",\"mobileNumber\":\"+"+DataProviderClass.getRandomMobileNumber()+"\",\"email\":\""+DataProviderClass.getRandomEmailforAutomation()+"\",\"langKey\":\"en\",\"clinicId\":\""+DataProviderClass.ClinicId+"\",\"class\":\"PHYSICIAN\"}";
 
         APIsPage apiPage = new APIsPage(driver);
 

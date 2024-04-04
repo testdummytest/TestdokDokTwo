@@ -11,7 +11,7 @@ import UiRegressionTests.ChLoginBaseTest;
 
 public class SurveyTests extends ChLoginBaseTest {
 
-    @Test(enabled = false, dataProvider = "login-doctor-And-patient-data", dataProviderClass = DataProviderClass.class)
+    @Test(dataProvider = "login-doctor-And-patient-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheSurveyIsSentToThePatientByTheDoctor(Doctor doctor, Patient patient) {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);
