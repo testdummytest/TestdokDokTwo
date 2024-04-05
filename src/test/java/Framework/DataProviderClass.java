@@ -302,4 +302,11 @@ public class DataProviderClass {
         Object doctor = new Doctor(DoctorUname, DoctorPass,"12345678","12345678");
         return new Object[][] { { admin, patient, doctor } };
     }
+
+    @DataProvider(name = "existing-admin-data")
+    public static Object[][] getExistingAdminStudyData() {
+        getProperties(); // Load properties
+        Object admin = new Admin(AdminUname, AdminPass);
+        return new Object[][] { { admin } };
+    }
 }

@@ -13,7 +13,7 @@ import org.testng.Assert;
 
 import Entities.Admin;
 import Entities.Patient;
-
+import Framework.DataProviderClass;
 import UiRegressionTests.loggersetup;
 import java.util.logging.Logger;
 
@@ -79,6 +79,93 @@ public class AdminHomePage extends BasePage{
             logger.info("Error in clicking Team btn");
         }
     }
+
+    public void createVerifyStudy(Admin admin){
+
+        driver.findElement(By.xpath("//span[text()='Studies']")).click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(70));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Create Study']"))).click();
+        String name = "AutomationStudy-"+DataProviderClass.getRandomString();
+        String key = DataProviderClass.getUniqueId();
+        driver.findElement(By.xpath("//input[@name='name']")).sendKeys(name);
+        driver.findElement(By.xpath("//input[@name='key']")).sendKeys(key);
+        driver.findElement(By.xpath("//span[text()='Create']")).click();
+        String xpathExpression = "//span[text()='Study " + name + " successfully created']";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
+        assert driver.findElement(By.xpath(xpathExpression)).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='" + name + "' ]")));
+        assert driver.findElement(By.xpath("//h4[text()='" + name + "' ]")).isDisplayed();
+        logger.info("Study created and verified successfully");
+
+        activateStudy();
+        addPhysicianAndCoordinatorToStudy();
+        exportStudyData();
+        deleteCurrentStudy();
+        
+    }
+
+    public void activateStudy() {
+        driver.findElement(By.xpath("//span[text()='Paused']")).click();
+        driver.findElement(By.xpath("//li[@data-value='ACTIVE']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Active']")));
+        assert driver.findElement(By.xpath("//span[text()='Active']")).isDisplayed();
+        logger.info("Study's ACTIVATED status is selected and verified");
+    }
+
+    public void addPhysicianAndCoordinatorToStudy() {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='studyPhysicians-add-button']")));
+        driver.findElement(By.xpath("//button[@id='studyPhysicians-add-button']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@data-test='select-0']")));
+        driver.findElement(By.xpath("//span[@data-test='select-0']")).click();
+        driver.findElement(By.xpath("//span[text()='Add']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@id='infopanel']/span[contains(text(), 'successfully added')]")));
+        assert driver.findElement(By.xpath("//span[contains(text(), 'successfully added')]")).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='studyPhysicians-person-0']")));
+        assert driver.findElement(By.xpath("//div[@id='studyPhysicians-person-0']")).isDisplayed();
+        logger.info("Physician added to study and verified successfully");
+        waitFewSeconds(5);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='studyCoordinator-add-button']")));
+        driver.findElement(By.xpath("//button[@id='studyCoordinator-add-button']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@data-test='select-0']")));
+        driver.findElement(By.xpath("//span[@data-test='select-0']")).click();
+        driver.findElement(By.xpath("//span[text()='Add']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@id='infopanel']/span[contains(text(), 'successfully added')]")));
+        assert driver.findElement(By.xpath("//span[contains(text(), 'successfully added')]")).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='studyCoordinator-person-0']")));
+        assert driver.findElement(By.xpath("//div[@id='studyCoordinator-person-0']")).isDisplayed();
+        logger.info("Coordinator added to study and verified successfully");
+
+    }
+
+    public void exportStudyData(){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Export Studydata']")));
+        driver.findElement(By.xpath("//span[text()='Export Studydata']")).click();
+        logger.info("Clicked on Export Studydata");
+        waitFewSeconds(20);
+    }
+
+    public void deleteCurrentStudy(){
+
+        driver.findElement(By.xpath("//span[text()='Active']")).click();
+        driver.findElement(By.xpath("//li[@data-value='FINISHED']")).click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Delete Study']")));
+        driver.findElement(By.xpath("//span[text()='Delete Study']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Ok']")));
+        driver.findElement(By.xpath("//span[text()='Ok']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Study successfully deleted']")));
+        assert driver.findElement(By.xpath("//span[text()='Study successfully deleted']")).isDisplayed();
+        logger.info("Study is successfully deleted");
+    }
+
 
     public void selectClinictDisableChat(Admin admin) {
 
@@ -534,16 +621,16 @@ public class AdminHomePage extends BasePage{
 
     public void UserProfileEditAndCancelEditByAdmin(Patient patient) {
         clickOnPatientsTab();
-        selectPrimaryUserForProfileEditByAdmin();
+        selectPrimaryUserForProfileEditByAdmin(patient);
         EditPrimaryCancelProfileByAdmin();
-        EditContactDetailsCancelProfileByAdmin();
+        // EditContactDetailsCancelProfileByAdmin();
     }
 
-    public void selectPrimaryUserForProfileEditByAdmin(){
+    public void selectPrimaryUserForProfileEditByAdmin(Patient patient){
 
         WebElement searchButton = driver.findElement(By.id("patient-search-bar-search-button"));
         click(searchButton);
-        fillTextById("updatedemailthree@gmail.com", "patient-search-bar-search-field");
+        fillTextById(patient.getEmail(), "patient-search-bar-search-field");
         waitFewSeconds(5000);
         WebElement myPatients = driver.findElement(By.id("myPatients"));
         WebElement myPatient = myPatients.findElement(By.xpath(("//a[contains(@href, '/private/app/patients/PAT')]")));
@@ -562,7 +649,7 @@ public class AdminHomePage extends BasePage{
 
     public void EditPrimaryCancelProfileByAdmin(){
 
-        WebElement contactEditpath = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[8]"));
+        WebElement contactEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpath); 
         logger.info("Edit btn clicked");
 
@@ -617,24 +704,45 @@ public class AdminHomePage extends BasePage{
         waitFewSeconds(2000);
         logger.info("birthday done");
 
-        waitFewSeconds(1000);
+        JavascriptExecutor jsdown = (JavascriptExecutor) driver;
+        jsdown.executeScript("window.scrollBy(0, 200);");
 
-        WebElement clickGenderDropdown = driver.findElement(By.xpath("//div[@aria-pressed=\"false\"]"));
+        WebElement clickGenderDropdown = driver.findElement(By.xpath("//div[@aria-pressed='false' and @role='button']"));
+        waitFewSeconds(2000);
         clickGenderDropdown.click();
+        waitFewSeconds(2000);
+        clickGenderDropdown.click();
+        logger.info("clicked dropdown");
+        waitFewSeconds(2000);
+        WebElement current_selected_gender_element = driver.findElement(By.xpath("//input[@name='gender']"));
+        String genderVal = current_selected_gender_element.getAttribute("value");
+        logger.info("gender value: " + genderVal);
 
-        waitFewSeconds(3000);
+        String genderxpath;
+        if ("MALE".equals(genderVal)) {
+            genderxpath = "//span[text()='Female']";
+            logger.info("first..");
+        } else if("FEMALE".equals(genderVal)) {
+            genderxpath = "//span[text()='Male']";
+            logger.info("second");
+        } else{
+            genderxpath = "//span[text()='Male']";
+            logger.info("third");
+        }
 
-        WebElement selectDropdownOption = driver.findElement(By.xpath("//span[text()=\"Male\"]"));
+        logger.info("After update val:" + genderxpath);
+        WebElement selectDropdownOption = driver.findElement(By.xpath(genderxpath));
+        waitFewSeconds(4000);
+        logger.info("selected option:" +selectDropdownOption);
         selectDropdownOption.click();
-
-        waitFewSeconds(3000);
+        logger.info("clicked option");
 
         //adding paths for a edit socialsecurity no/insurance no:
         WebElement primaryEditSocialSecurityNo = driver.findElement(By.xpath("//input[@name='insuranceNumber']"));
         primaryEditSocialSecurityNo.click();
         waitFewSeconds(1000);
         primaryEditSocialSecurityNo.clear();
-        primaryEditSocialSecurityNo.sendKeys("333");
+        primaryEditSocialSecurityNo.sendKeys(DataProviderClass.getRandomMobileNumber());
         waitFewSeconds(1000);
         logger.info("insurance no done");
 		
@@ -650,15 +758,11 @@ public class AdminHomePage extends BasePage{
         WebElement contactFieldSave = driver.findElement(By.xpath("//button[@id='save']"));
         click(contactFieldSave);
         logger.info("Successfully saved primary fields..");
-
         waitFewSeconds(4000);
-
         //cancel field process for primary fields
-        WebElement contactEditpathAgain = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[8]"));
+        WebElement contactEditpathAgain = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpathAgain); 
-
         waitFewSeconds(1000);
-
         WebElement primaryEditfirstnameAgain = driver.findElement(By.xpath("//input[@name='firstName']"));
         // primaryEditfirstnameAgain.click();
         click(primaryEditfirstnameAgain);
@@ -666,13 +770,10 @@ public class AdminHomePage extends BasePage{
         primaryEditfirstnameAgain.clear();
         primaryEditfirstnameAgain.sendKeys("AGAIN Updated First Name");
         waitFewSeconds(1000);
-        
         WebElement cancelBtnpath = driver.findElement(By.xpath("//span[text()='Cancel']"));
         waitFewSeconds(3000);
         cancelBtnpath.click();
-
         waitFewSeconds(6000);
-
         logger.info("Cancel btn click for primary fields success");
 
     }
@@ -686,94 +787,57 @@ public class AdminHomePage extends BasePage{
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, -500);");
         //end
-
-        WebElement contactDetailsEditpath = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[9]"));
-
+        WebElement contactDetailsEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
         // waitFewSeconds(2000);
-
         click(contactDetailsEditpath); 
-
         logger.info("Edit btn clicked");
-
         //adding paths for a edit email:
         WebElement contactEditEmail = driver.findElement(By.xpath("//input[@name='email']"));
-        
         contactEditEmail.click();
         waitFewSeconds(1000);
-
         contactEditEmail.clear();
-
         contactEditEmail.sendKeys("updatedemailFour@gmail.com");
         waitFewSeconds(1000);
-
         logger.info("Mail updated");
-
-        
         //adding paths for a edit mobno:
         WebElement contactEditMobileno = driver.findElement(By.xpath("//input[@name='mobileNumber']"));
-        
         contactEditMobileno.click();
         waitFewSeconds(1000);
-
         contactEditMobileno.clear();
-
         contactEditMobileno.sendKeys("+419994911");
         waitFewSeconds(1000);
-
         logger.info("mobileno updated");
-
         waitFewSeconds(1000);
-
-        
         WebElement contactFieldSave = driver.findElement(By.xpath("//button[@id='save']"));
         click(contactFieldSave);
-
         waitFewSeconds(6000);
-
         logger.info("Saved successfully");
-
         //used to scroll up, use because element not seen and clickable
         JavascriptExecutor jsupnew = (JavascriptExecutor) driver;
         jsupnew.executeScript("window.scrollBy(0, -500);");
         //end
-
         logger.info("Again scroll up");
-
         waitFewSeconds(6000);
         //end edit and save profile process
-
-
-        //for cancel process start
         //edit btn click
-        WebElement contactDetailsEditpathTwo = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[9]"));
-        
+        WebElement contactDetailsEditpathTwo = driver.findElement(By.xpath("//span[text()='Edit']"));
         logger.info("Secondtime find xath of edit");
-        
         click(contactDetailsEditpathTwo); 
-
         logger.info("for Cancel process Edit btn clicked");
-
         WebElement contactEditEmailTwo = driver.findElement(By.xpath("//input[@name='email']"));
         waitFewSeconds(2000);
         contactEditEmailTwo.click();
         waitFewSeconds(1000);
-
         contactEditEmailTwo.clear();
-
         contactEditEmailTwo.sendKeys("updatedemailThreeNewCancel@gmail.com");
         waitFewSeconds(2000);
-
         logger.info("Cancel email field updated");
-
         //target cancel btn click
         //end cancel process
-
         WebElement cancelBtnpath = driver.findElement(By.xpath("//span[text()='Cancel']"));
         waitFewSeconds(3000);
         cancelBtnpath.click();
-
         logger.info("Cancel btn click success");
-
         waitFewSeconds(4000);
 
     }

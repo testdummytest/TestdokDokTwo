@@ -769,21 +769,9 @@ public class DoctorHomePage extends BasePage {
     public void UserProfileEditAndCancelEdit(Patient patient) {
         selectPrimaryUserForProfileEdit();
         EditPrimaryCancelProfile();
-        EditContactDetailsCancelProfile();
     }
 
     public void selectPrimaryUserForProfileEdit(){
-
-        // WebElement searchButton = driver.findElement(By.id("patient-search-bar-search-button"));
-        // click(searchButton);
-        // DataProviderClass.getProperties();
-        // fillTextById(DataProviderClass.PatientUname, "patient-search-bar-search-field");
-        // waitFewSeconds(5000);
-        // WebElement myPatients = driver.findElement(By.id("myPatients"));
-        // WebElement myPatient = myPatients.findElement(By.xpath(("//a[contains(@href, '/private/app/patients/PAT')]")));
-        // click(myPatient);
-
-        // logger.info("Clickd on patient");
 
         //click on shoe more arrow btn
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
@@ -799,7 +787,7 @@ public class DoctorHomePage extends BasePage {
             logger.info("Error in clicking close/No thanks button or pop up not shown");
         }
 
-        WebElement contactEditpath = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[10]"));
+        WebElement contactEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpath); 
         logger.info("Edit btn clicked");
 
@@ -914,7 +902,7 @@ public class DoctorHomePage extends BasePage {
         waitFewSeconds(4000);
 
         //cancel field process for primary fields
-        WebElement contactEditpathAgain = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[10]"));
+        WebElement contactEditpathAgain = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpathAgain); 
 
         waitFewSeconds(1000);
@@ -946,7 +934,7 @@ public class DoctorHomePage extends BasePage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, -600);");
         //end
-        WebElement contactDetailsEditpath = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[11]"));
+        WebElement contactDetailsEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
         // waitFewSeconds(2000);
 
         click(contactDetailsEditpath); 
@@ -978,7 +966,7 @@ public class DoctorHomePage extends BasePage {
 
         //for cancel process start
         //edit btn click
-        WebElement contactDetailsEditpathTwo = driver.findElement(By.xpath("(//button[contains(@class, 'jss62') and @tabindex='0'])[11]"));
+        WebElement contactDetailsEditpathTwo = driver.findElement(By.xpath("//span[text()='Edit']"));
         logger.info("Secondtime find xath of edit");
         click(contactDetailsEditpathTwo); 
         logger.info("for Cancel process Edit btn clicked");
