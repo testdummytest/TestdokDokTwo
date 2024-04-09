@@ -10,12 +10,12 @@ import Framework.DataProviderClass;
 import PageObjects.AdminHomePage;
 import PageObjects.LoginPage;
 
-public class CreateStudyTests extends ChLoginBaseTest{
+public class StudyTests extends ChLoginBaseTest{
     
     private static final Logger logger = loggersetup.getLogger();
     
     @Test(dataProvider = "existing-admin-data", dataProviderClass = DataProviderClass.class)
-    public void shouldVerifyThatTheAdminCanCreateStudySuccessfully(Admin admin) {
+    public void shouldVerifyThatTheAdminCanCreateAndVerifyStudySuccessfully(Admin admin) {
         
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsAdmin(admin);
