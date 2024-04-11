@@ -48,4 +48,6 @@ jobs:
         from: automationmail92@gmail.com
         body: Build job of  completed successfully!
         html_body: file://target/surefire-reports/emailable-report.html
-        attachments: target/surefire-reports/emailable-report.html
+        attachments: |
+          target/surefire-reports/emailable-report.html
+          target/**/*.png
