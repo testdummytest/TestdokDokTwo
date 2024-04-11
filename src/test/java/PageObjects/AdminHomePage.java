@@ -233,7 +233,7 @@ public class AdminHomePage extends BasePage{
             logger.info("Clinic is already disabled");
         }
         driver.navigate().refresh();
-        logoutFromUser();
+        // logoutFromUser();
     }
 
     public void selectClinicEnableChat(Admin admin) {
