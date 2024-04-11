@@ -51,3 +51,4 @@ jobs:
         attachments: |
           target/surefire-reports/emailable-report.html
           Screenshot/*
+          docDokLog.txt
