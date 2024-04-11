@@ -50,4 +50,4 @@ jobs:
         html_body: file://target/surefire-reports/emailable-report.html
         attachments: |
           target/surefire-reports/emailable-report.html
-          target/Screenshot
+          target/Screenshot/*
