@@ -209,9 +209,9 @@ public class AdminHomePage extends BasePage{
 
     public void selectClinictDisableChat(Admin admin) {
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
-        driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Clinics'])[1]"))).click();
+        // driver.findElement(By.xpath("(//span[text()='Clinics'])[1]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
         driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
 
@@ -233,7 +233,7 @@ public class AdminHomePage extends BasePage{
             logger.info("Clinic is already disabled");
         }
         driver.navigate().refresh();
-        // logoutFromUser();
+        logoutFromUser();
     }
 
     public void selectClinicEnableChat(Admin admin) {
