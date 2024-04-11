@@ -37,7 +37,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: logs
-        path: "docDokLog.txt"
+        path: "docDokLog.log"
         
     # Send mail
     - name: Send mail
@@ -57,4 +57,5 @@ jobs:
         attachments: |
           target/surefire-reports/emailable-report.html
           Screenshot/*
-          docDokLog.txt
+          docDokLog.log
+
