@@ -223,13 +223,14 @@ public class DoctorHomePage extends BasePage {
     }
 
     private void sendSurvey() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
         DataProviderClass.getProperties();
         WebElement sendSurveyButton = driver.findElement(By.id("send-survey-button"));
         click(sendSurveyButton);
         fillTextById(DataProviderClass.SurveyName, "sendSurveyFromPatient-surveys-search-field");
-        waitFewSeconds(3);
-        WebElement agreeCheckbox = driver.findElement(By.xpath("//span[text()='"+DataProviderClass.SurveyName+"']/../../../..//div//input"));
-        click(agreeCheckbox);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='"+DataProviderClass.SurveyName+"']/../../../..//div//input/..//.."))).click();
+        // WebElement agreeCheckbox = driver.findElement(By.xpath("//span[@data-test='select-0']"));
+        // click(agreeCheckbox);
         WebElement submitButton = driver.findElement(By.id("save"));
         click(submitButton);
     }

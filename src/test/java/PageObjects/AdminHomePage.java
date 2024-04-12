@@ -82,6 +82,17 @@ public class AdminHomePage extends BasePage{
 
     public void createVerifyStudy(Admin admin){
 
+        createStudy();
+        activateStudy();
+        addPhysicianAndCoordinatorToStudy();
+        addSurveyToStudy();
+        addSchedulingToSurvey();
+        removeSurveyFromStudy();
+        exportStudyData();
+        deleteCurrentStudy();
+        
+    }
+    public void createStudy(){
         driver.findElement(By.xpath("//span[text()='Studies']")).click();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
@@ -99,17 +110,13 @@ public class AdminHomePage extends BasePage{
         assert driver.findElement(By.xpath("//h4[text()='" + name + "' ]")).isDisplayed();
         logger.info("Study created and verified successfully");
 
-        activateStudy();
-        addPhysicianAndCoordinatorToStudy();
-        exportStudyData();
-        deleteCurrentStudy();
-        
     }
 
     public void activateStudy() {
-        driver.findElement(By.xpath("//span[text()='Paused']")).click();
-        driver.findElement(By.xpath("//li[@data-value='ACTIVE']")).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Paused']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Active']"))).click();
+        waitFewSeconds(5);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Active']")));
         assert driver.findElement(By.xpath("//span[text()='Active']")).isDisplayed();
         logger.info("Study's ACTIVATED status is selected and verified");
@@ -140,6 +147,39 @@ public class AdminHomePage extends BasePage{
         assert driver.findElement(By.xpath("//div[@id='studyCoordinator-person-0']")).isDisplayed();
         logger.info("Coordinator added to study and verified successfully");
 
+    }
+
+    public void addSurveyToStudy(){
+        DataProviderClass.getProperties();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Add Survey']"))).click();
+        WebElement searchButton = driver.findElement(By.id("addSurveyToStudy-surveys-search-field"));
+        click(searchButton);
+        fillTextById(DataProviderClass.StudySurvey, "addSurveyToStudy-surveys-search-field");
+        waitFewSeconds(5000);
+        WebElement agreeCheckbox = driver.findElement(By.xpath("//span[text()='"+DataProviderClass.StudySurvey+"']/../../../..//div//input"));
+        click(agreeCheckbox);
+        WebElement submitButton = driver.findElement(By.id("save"));
+        click(submitButton);
+        assert driver.findElement(By.xpath("//span[contains(text(), 'Survey successfully added to the study')]")).isDisplayed();
+    }
+
+    public void addSchedulingToSurvey(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[@aria-label='More'])[1]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Schedule Survey']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Do schedule the survey']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Send as soon patient is added to the study']"))).click();
+        WebElement submitButton = driver.findElement(By.id("save"));
+        click(submitButton);
+    }
+
+    public void removeSurveyFromStudy(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//button[@aria-label='More'])[1]"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Remove Survey from Study']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Survey successfully removed from Study')]"))).click();
+        assert driver.findElement(By.xpath("//span[contains(text(), 'Survey successfully removed from Study')]")).isDisplayed();
     }
 
     public void exportStudyData(){
@@ -176,6 +216,7 @@ public class AdminHomePage extends BasePage{
         driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
 
         try{
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='sync-disable']")));
             assert driver.findElement(By.xpath("//*[@data-test='sync-disable']")).isDisplayed();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Enable/Disable Chat')]")));
             waitFewSeconds(2000);
@@ -204,6 +245,7 @@ public class AdminHomePage extends BasePage{
         driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
 
         try{
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='sync-enable']")));
             assert driver.findElement(By.xpath("//*[@data-test='sync-enable']")).isDisplayed();
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Enable/Disable Chat')]")));
             waitFewSeconds(2000);
@@ -839,6 +881,74 @@ public class AdminHomePage extends BasePage{
         cancelBtnpath.click();
         logger.info("Cancel btn click success");
         waitFewSeconds(4000);
+
+    }
+
+    public void createEditDeleteModulebyadmin (Admin admin)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Surveys'])"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Modules']"))).click();
+        logger.info("Clicked on module");
+        String moduleName = createModule(); 
+        editModule(moduleName);
+        deleteModule(moduleName);
+         
+    }
+    
+    public String createModule(){
+        String randomName = "00Automation_"+DataProviderClass.getRandomString();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Create module']"))).click();
+        logger.info("Click on Create Module");
+        driver.findElement(By.xpath("//input[@name='groupName']")).sendKeys(randomName);
+        WebElement element = driver.findElement(By.xpath("//input[@id='downshift-0-input']"));
+        element.click();
+        element.sendKeys(Keys.ARROW_DOWN);
+        element.sendKeys(Keys.ENTER);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Save']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Module saved successfully']")));
+        assert driver.findElement(By.xpath("//span[text()='Module saved successfully']")).isDisplayed();
+        logger.info("Module created successfully");
+        return randomName;
+    
+    }
+
+    public void editModule(String moduleName){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        String oldCount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='"+moduleName+"']/../../..//div[2]//div"))).getText();
+        logger.info(oldCount);
+        driver.navigate().refresh();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Modules']"))).click(); 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='"+moduleName+"']/../../..//div[3]//div//button"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Edit']"))).click();
+        driver.findElement(By.xpath("//input[@name='groupName']")).clear(); 
+        driver.findElement(By.xpath("//input[@name='groupName']")).sendKeys(moduleName); 
+        WebElement element = driver.findElement(By.xpath("//input[@id='downshift-0-input']"));
+        element.click();
+        element.sendKeys(Keys.ARROW_DOWN);
+        element.sendKeys(Keys.ENTER);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Save']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Module saved successfully']")));
+        assert driver.findElement(By.xpath("//span[text()='Module saved successfully']")).isDisplayed();
+        String latestCount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='"+moduleName+"']/../../..//div[2]//div"))).getText();
+        logger.info(latestCount);
+        Assert.assertEquals(Integer.parseInt(oldCount) + 1, Integer.parseInt(latestCount));
+        logger.info("Module Updated successfully");
+
+    
+    }
+    public void deleteModule(String moduleName){
+        driver.navigate().refresh();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));    
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Modules']"))).click();    
+        logger.info("Going to delete = "+moduleName);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='"+moduleName+"']/../../..//div[3]//div//button"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Delete']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Ok']"))).click();
+        logger.info("Module Delete successfully");
+
 
     }
 
