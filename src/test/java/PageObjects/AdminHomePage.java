@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
+import java.io.File;
 import Entities.Admin;
 import Entities.Patient;
 import Framework.DataProviderClass;
@@ -265,6 +265,172 @@ public class AdminHomePage extends BasePage{
         logoutFromUser();
         logger.info("Logged out from admin 2nd time");
         
+    }
+
+
+    public String createCatalog(Admin admin){
+
+        driver.findElement(By.xpath("//span[text()='Catalog']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Upload Content']"))).click();
+        waitFewSeconds(20);
+        logger.info("Clicked on uplaod catalog");
+
+        String catalogName = fillCatalogFormDataAndSave();
+        logger.info(catalogName);
+        return catalogName;
+
+    }
+
+    public void editAndDeleteCatalog(Admin admin, String catalogName){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Catalog']"))).click();
+        searchTheCatalog(catalogName);
+        editCatalogData();
+        searchTheCatalog(catalogName);
+        deleteCatalog();
+
+    }
+
+    public String fillCatalogFormDataAndSave(){
+        
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='title']"))).click();
+        String catalogTitle = "AutomationCatalog-"+DataProviderClass.getRandomString();
+        driver.findElement(By.xpath("//input[@name='title']")).sendKeys(catalogTitle);
+        driver.findElement(By.xpath("//input[@name='text']")).sendKeys("AutomationCatalogDescription-"+DataProviderClass.getRandomString());
+        driver.findElement(By.xpath("//input[@name='tags']")).sendKeys("tag-"+DataProviderClass.getRandomString());
+        driver.findElement(By.xpath("//input[@name='license']")).sendKeys("license-"+DataProviderClass.getRandomString());
+        WebElement element_lang = driver.findElement(By.xpath("//input[@id='downshift-0-input']"));
+        element_lang.click();
+        element_lang.sendKeys(Keys.ARROW_DOWN);
+        element_lang.sendKeys(Keys.ENTER);
+        waitFewSeconds(30);
+        driver.findElement(By.xpath("//span[text()='For multiple tags, separate each tag with a semicolon']")).click();
+        WebElement element_studies = driver.findElement(By.xpath("//input[@id='downshift-1-input']"));
+        waitFewSeconds(3);
+        element_studies.click();
+        String studySearch = DataProviderClass.StudyName;
+        driver.findElement(By.xpath("//input[@id='downshift-1-input']")).sendKeys(studySearch);
+        waitFewSeconds(5);
+        element_studies.sendKeys(Keys.ARROW_DOWN);
+        element_studies.sendKeys(Keys.ENTER);
+
+        logger.info("selected study");
+        driver.findElement(By.xpath("//span[text()='For multiple tags, separate each tag with a semicolon']")).click();
+        WebElement element_clinic = driver.findElement(By.xpath("//input[@id='downshift-2-input']"));
+        element_clinic.click();
+        element_clinic.sendKeys(Keys.ARROW_DOWN);
+        element_clinic.sendKeys(Keys.ENTER);
+        driver.findElement(By.xpath("//span[text()='For multiple tags, separate each tag with a semicolon']")).click();
+        logger.info("ends dropdown selection");
+        // Locate the file upload input element
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='file']")));
+        WebElement fileInput = driver.findElement(By.xpath("//input[@type='file']"));
+        
+        String projectPath = System.getProperty("user.dir");
+        String relativeFilePath = projectPath + File.separator + "CatalogFile.pdf";
+        fileInput.sendKeys(relativeFilePath);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='save']")));
+        driver.findElement(By.xpath("//button[@id='save']")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Content successfully uploaded to catalog']")));
+        assert driver.findElement(By.xpath("//span[text()='Content successfully uploaded to catalog']")).isDisplayed();
+
+        logger.info("Catalog uploaded successfully");
+        logoutFromUser();
+        return catalogTitle;
+    }
+
+    public void searchTheCatalog(String catalogName){   
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-search-bar-search-button"))).click();
+        logger.info("search btn clicked");
+        waitFewSeconds(5);
+        WebElement searchCatalog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-search-bar-search-field")));
+        searchCatalog.clear();
+        searchCatalog.sendKeys(catalogName);
+        waitFewSeconds(50);
+    }
+
+    public void editCatalogData(){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
+        driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Edit']")));
+        driver.findElement(By.xpath("//span[text()='Edit']")).click();
+
+        String element_text_xpth = "//input[@name='text']";
+        driver.findElement(By.xpath(element_text_xpth)).clear();
+        driver.findElement(By.xpath(element_text_xpth)).sendKeys("AutomationCatalogDesUpdated-"+DataProviderClass.getRandomString());
+
+        String element_tag_xpath = "//input[@name='tags']";
+        driver.findElement(By.xpath(element_tag_xpath)).clear();
+        driver.findElement(By.xpath(element_tag_xpath)).sendKeys("tagUpdated-"+DataProviderClass.getRandomString());
+
+        String element_license_xpath = "//input[@name='license']";
+        driver.findElement(By.xpath(element_license_xpath)).clear();
+        driver.findElement(By.xpath(element_license_xpath)).sendKeys("licenseUpdated-"+DataProviderClass.getRandomString());
+        
+        WebElement element_lang = driver.findElement(By.xpath("//input[@id='downshift-0-input']"));
+        element_lang.click();
+        waitFewSeconds(5);
+        element_lang.sendKeys(Keys.ARROW_DOWN);
+        element_lang.sendKeys(Keys.ENTER);
+        element_lang.sendKeys(Keys.BACK_SPACE);
+        element_lang.sendKeys(Keys.ARROW_DOWN);
+        element_lang.sendKeys(Keys.ENTER);
+        waitFewSeconds(10);
+        driver.findElement(By.xpath("//span[text()='For multiple tags, separate each tag with a semicolon']")).click();
+
+        WebElement element_studies = driver.findElement(By.xpath("//input[@id='downshift-1-input']"));
+        element_studies.click();
+        element_studies.sendKeys(Keys.ARROW_DOWN);
+        element_studies.sendKeys(Keys.ENTER);
+        element_studies.sendKeys(Keys.BACK_SPACE);
+        driver.findElement(By.xpath("//span[text()='For multiple tags, separate each tag with a semicolon']")).click();
+        waitFewSeconds(4);
+
+        WebElement element_clinic = driver.findElement(By.xpath("//input[@id='downshift-2-input']"));
+        element_clinic.click();
+        element_clinic.sendKeys(Keys.ARROW_DOWN);
+        element_clinic.sendKeys(Keys.ENTER);
+        element_clinic.sendKeys(Keys.BACK_SPACE);
+        driver.findElement(By.xpath("//span[text()='For multiple tags, separate each tag with a semicolon']")).click();
+        waitFewSeconds(60);
+        // Locate the file upload input element
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='file']")));
+        WebElement fileInput = driver.findElement(By.xpath("//input[@type='file']"));
+        String projectPath = System.getProperty("user.dir");
+        String relativeFilePath = projectPath + File.separator + "CatalogFile.pdf";
+        fileInput.sendKeys(relativeFilePath);
+        waitFewSeconds(60);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='save']")));
+        driver.findElement(By.xpath("//button[@id='save']")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Content successfully uploaded to catalog']")));
+        assert driver.findElement(By.xpath("//span[text()='Content successfully uploaded to catalog']")).isDisplayed();
+        logger.info("Catalog updated successfully");
+        driver.navigate().refresh();
+    }
+
+    public void deleteCatalog(){
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(180));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@class='action-overlay -odd'])[1]")));
+        driver.findElement(By.xpath("(//div[@class='action-overlay -odd'])[1]")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Delete']")));
+        driver.findElement(By.xpath("//span[text()='Delete']")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Yes']")));
+        driver.findElement(By.xpath("//span[text()='Yes']")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='No rows found']")));
+        assert driver.findElement(By.xpath("//span[text()='No rows found']")).isDisplayed();
+        logger.info("Catalog Deleted Successfully.");
+
     }
 
 
@@ -536,7 +702,6 @@ public class AdminHomePage extends BasePage{
         try{
             //find and store activatedstatus
             WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
-
             //check for ACTIVATED STATUS OR NOT[true sign]
             if(chkingActivatedStatus.isDisplayed()){
                 // Assert.fail("Activated Status find..So not Send App Invitation to PATIENT.");
@@ -544,27 +709,18 @@ public class AdminHomePage extends BasePage{
             }
         }
         catch(Exception e){
-
             logger.info("Element not found So in catch block executes..: " + e.getMessage());
-
             logger.info("Verified that this page has not any ACTIVATED STATUS for a paient");
-
             logger.info("Into catch block");
-
             //click on more svg
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
             logger.info("Cliked on More svg menu opens");
-
             waitFewSeconds(3000);
-
             driver.findElement(By.xpath("//*[text()='Renew invitation']")).click();
             waitFewSeconds(2000);
-
             logger.info("Cliked on renew invitation btn..");
-
             try{
                 logger.info("In try block");
-
                 waitFewSeconds(4000);
                 //verify msg: Invitation Email was sent again.
                 WebElement ele = driver.findElement(By.xpath("//*[text()='Invitation Email was sent again.']"));
@@ -574,21 +730,12 @@ public class AdminHomePage extends BasePage{
                 Assert.assertEquals(ExpectedTitle, ActualTitle);
                 logger.info("Invitation App Message is successfully verified");
 
-                // waitFewSeconds(5000);
-
-                // driver.findElement(By.xpath("(//span[text()='Patients'])[3]")).click();
-                // driver.findElement(By.xpath("//span[text()='App Activated']")).click();
-                // waitFewSeconds(10000);
-
             }catch(Exception exe){
 
                 logger.info("Into catch block");
                 Assert.fail("Titles do not match");
-
             }
-
         }
-
     }
 
 
@@ -605,17 +752,12 @@ public class AdminHomePage extends BasePage{
 
     //this func executes the catch block if not find element
     private void sendInvitationToUsersTabUser() {
-
         driver.findElement(By.xpath("//*[text()='App Activated']")).click();
-
         logger.info("Clicked on App activated filter");
-
         waitFewSeconds(6000);
-
         try{
             //find and store activatedstatus
             WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
-
             //check for ACTIVATED STATUS OR NOT[true sign]
             if(chkingActivatedStatus.isDisplayed()){
                 // Assert.fail("Activated Status find..So not Send App Invitation to USER.");
@@ -623,27 +765,18 @@ public class AdminHomePage extends BasePage{
             }
         }
         catch(Exception e){
-
             logger.info("Element not found So in catch block executes..: " + e.getMessage());
-
             logger.info("Verified that this page has not any ACTIVATED STATUS for a user");
-
             logger.info("Into catch block");
-
             //click on more svg
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
             logger.info("Cliked on More svg menu opens");
-
             waitFewSeconds(3000);
-
             driver.findElement(By.xpath("//*[text()='Renew invitation']")).click();
             waitFewSeconds(2000);
-
             logger.info("Cliked on renew invitation btn..");
-
             try{
                 logger.info("In try block");
-
                 waitFewSeconds(4000);
                 //verify msg: Invitation Email was sent again.
                 WebElement ele = driver.findElement(By.xpath("//*[text()='Invitation Email was sent again.']"));
@@ -694,31 +827,23 @@ public class AdminHomePage extends BasePage{
         WebElement contactEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpath); 
         logger.info("Edit btn clicked");
-
         //used to scroll up, use because element not seen and clickable
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0, -500);");
-        //end
-
 		//for primary data
         //adding paths for a edit salutation:
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         WebElement primaryEditSalutation = driver.findElement(By.xpath("//input[@id='patientData-salutation']"));
         wait.until(ExpectedConditions.elementToBeClickable(primaryEditSalutation));
-
         primaryEditSalutation.click();
-
         waitFewSeconds(2000);
-
         //to clear the existing code in field
         int lengthSlautation = primaryEditSalutation.getAttribute("value").length();
         for (int i = 0; i < lengthSlautation; i++) {
             primaryEditSalutation.sendKeys(Keys.BACK_SPACE);
-        }//end
-
+        }
         primaryEditSalutation.sendKeys("PatientUpdated");
         logger.info("salutation done");
-		
         //adding paths for a edit firstname:
         WebElement primaryEditfirstname = driver.findElement(By.xpath("//input[@name='firstName']"));
         primaryEditfirstname.click();
@@ -727,7 +852,6 @@ public class AdminHomePage extends BasePage{
         primaryEditfirstname.sendKeys("YS");
         waitFewSeconds(1000);
         logger.info("firstname done");
-		
         //adding paths for a edit lastname:
         WebElement primaryEditLastName = driver.findElement(By.xpath("//input[@name='lastName']"));
         primaryEditLastName.click();
@@ -819,11 +943,8 @@ public class AdminHomePage extends BasePage{
         logger.info("Cancel btn click for primary fields success");
 
     }
- 
     
-    //working properly for edit/cancel contactDetail user profile
     public void EditContactDetailsCancelProfileByAdmin(){
-
         //edit and save process start
         //used to scroll up, use because element not seen and clickable
         JavascriptExecutor js = (JavascriptExecutor) driver;

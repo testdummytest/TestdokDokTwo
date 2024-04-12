@@ -114,6 +114,7 @@ public class BasePage {
     public void waitFewSeconds(int seconds) {
         try {
             Thread.sleep(seconds);
+            logger.info("inside sleep");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -38,6 +38,7 @@ public class DataProviderClass {
     public static String ClinicId;
     public static String PatientId;
     public static String SurveyName;
+    public static String StudyName;
     public static String StudySurvey;
 
     private static final String AES_ALGORITHM = "AES";
@@ -70,6 +71,7 @@ public class DataProviderClass {
                 PatientId = prop.getProperty("qaPatientId");
                 SurveyName = prop.getProperty("qaSurvey");
                 StudySurvey = prop.getProperty("qaStudySurvey");
+                StudyName = prop.getProperty("qaStudy");
 
             
             }
@@ -94,6 +96,7 @@ public class DataProviderClass {
                 PatientId = prop.getProperty("stagePatientId");
                 SurveyName = prop.getProperty("stageSurvey");
                 StudySurvey = prop.getProperty("stageStudySurvey");
+                StudyName = prop.getProperty("stageStudy");
 
 
             }

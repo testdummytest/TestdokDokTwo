@@ -40,7 +40,7 @@ public class PatientHomePage extends BasePage {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()=\"Home\"])[1]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Home'])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()=\"Patients\"])[2]")));
         driver.findElement(By.xpath("(//span[text()=\"Patients\"])[2]")).click();
@@ -61,12 +61,13 @@ public class PatientHomePage extends BasePage {
         driver.findElement(By.xpath("(//span[text()=\"Profile\"])[2]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4//span[contains(text(),\"Welcome\")]")));
         assert driver.findElement(By.xpath("//h4//span[contains(text(),\"Welcome\")]")).isDisplayed();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
-        driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
+        waitFewSeconds(2);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])"))).click();
+        // driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
         logger.info("Checked Profile Page");
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Appointments\"])[2]")));
-        driver.findElement(By.xpath("(//span[text()=\"Appointments\"])[2]")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Appointments\"])[1]"))).click();
+        // driver.findElement(By.xpath("(//span[text()=\"Appointments\"])[2]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()=\"Time\"]")));
         assert driver.findElement(By.xpath("//span[text()=\"Time\"]")).isDisplayed();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
