@@ -71,7 +71,7 @@ public class SalutaSelfRegistrationPage extends BasePage{
 
     public void verifyGettingSuccessPage() {
         try {
-            waitFewSeconds(5);
+            waitFewSeconds(5000);
             driver.findElement(By.className("checkmark"));
             driver.findElement(By.className("message-sent"));
         } catch (Exception e) {

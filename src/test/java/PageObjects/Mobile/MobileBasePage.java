@@ -27,7 +27,7 @@
 //         click(element);
 //         element.clear();
 //         element.sendKeys(text);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void  fillTextByClassName(String text, String el) {
@@ -35,7 +35,7 @@
 //         click(element);
 //         element.clear();
 //         element.sendKeys(text);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void  fillTextById(String text, String el) {
@@ -43,7 +43,7 @@
 //         click(element);
 //         element.clear();
 //         element.sendKeys(text);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void  fillTextByAccessibilityId(String text, String el) {
@@ -51,7 +51,7 @@
 //         click(element);
 //         element.clear();
 //         element.sendKeys(text);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void  fillTextByClassNames(String text, String el, int index) {
@@ -59,16 +59,16 @@
 //         click(element);
 //         element.clear();
 //         element.sendKeys(text);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void click(WebElement el) {
 //         Actions actions = new Actions(androidDriver);
 //         actions.moveToElement(el);
 //         actions.perform();
-//         waitFewSeconds(1);
+//         waitFewSeconds(1000);
 //         el.click();
-//         waitFewSeconds(3);
+//         waitFewSeconds(3000);
 //     }
 
 //     public void waitFewSeconds(int seconds) {
@@ -81,7 +81,7 @@
 
 //     public void hideKeyboard() {
 //         androidDriver.hideKeyboard();
-//         waitFewSeconds(1);
+//         waitFewSeconds(1000);
 //     }
 
 //     public void waitUntilVisibleByClassName(String element) {

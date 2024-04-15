@@ -26,7 +26,7 @@ public class PatientHomePage extends BasePage {
             driver.findElement(By.className("chat-content"));
             driver.findElement(By.id("chat-input"));
             driver.findElement(By.className("events"));
-            waitFewSeconds(5);
+            waitFewSeconds(5000);
             logoutFromUser();
         } catch (Exception e) {
             Assert.fail("There is an issue in the patient home page, please check! ");
@@ -58,7 +58,7 @@ public class PatientHomePage extends BasePage {
         driver.findElement(By.xpath("(//span[text()=\"Profile\"])[2]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4//span[contains(text(),\"Welcome\")]")));
         assert driver.findElement(By.xpath("//h4//span[contains(text(),\"Welcome\")]")).isDisplayed();
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])"))).click();
         // driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
         logger.debug("Checked Profile Page");
@@ -103,15 +103,15 @@ public class PatientHomePage extends BasePage {
         WebElement searchButton = driver.findElement(By.id("patient-search-bar-search-button"));
         click(searchButton);
         logger.debug("Click on search button");
-        waitFewSeconds(5);
+        waitFewSeconds(5000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@placeholder,'Search')]")));
         driver.findElement(By.xpath("//input[contains(@placeholder,'Search')]")).sendKeys(email);
-        waitFewSeconds(5);
+        waitFewSeconds(5000);
         driver.findElement(By.xpath("((//button[@data-test='rowMenuButton'])[1]//span)[1]")).click();
         logger.info("Click on Hamburgun button");
         driver.findElement(By.xpath("//span[text()=\"Show Keycloak/Docdok events\"]")).click();
         logger.info("Click on Show Keycloak/Docdok events button");
-        waitFewSeconds(5);
+        waitFewSeconds(5000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()=\"SEND_RESET_PASSWORD\"])[1]")));
         assert driver.findElement(By.xpath("(//span[text()=\"SEND_RESET_PASSWORD\"])[1]")).isDisplayed();
         logger.info("Send reset password is displayed");

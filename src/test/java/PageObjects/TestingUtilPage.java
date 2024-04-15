@@ -39,10 +39,10 @@ public class TestingUtilPage extends BasePage {
     }
 
     private void goToTheEmailsAndClickOnTheLastEmail() {
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
         WebElement getEmails = driver.findElement(By.xpath("//button[contains(text(), 'emails')]"));
         click(getEmails);
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
         WebElement emails = driver.findElement(By.id("emails"));
         Integer emailsSize = emails.findElements(By.tagName("li")).size();
         WebElement lastEmail = emails.findElements(By.tagName("li")).get(emailsSize - 1);

@@ -31,7 +31,7 @@
 //         dc.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "2000");
 
 //         androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), dc);
-//         waitFewSeconds(6);
+//         waitFewSeconds(6000);
 //     }
 
 //     public void fillUserNameAndPasswordForAnExistingPatient(Patient patient) {
@@ -47,7 +47,7 @@
 //         fillTextByClassNames(patient.getPassword(), "android.widget.EditText", 1);
 //         hideKeyboard();
 //         clickByTouchAction(700,2417);
-//         waitFewSeconds(4);
+//         waitFewSeconds(4000);
 //         /*MobileElement signIn = androidDriver.findElementByClassName("android.widget.Button");
 //         click(signIn);*/
 //     }
@@ -96,7 +96,7 @@
 //         clickOnMessagesBox();
 //         WebElement joinDiGA1Button = androidDriver.findElement(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"last-bubble\"]/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.Button/android.widget.TextView"));
 //         click(joinDiGA1Button);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void verifySecondMessage() {
@@ -109,12 +109,12 @@
 //     private void clickOnBackButton() {
 //         WebElement backButton = androidDriver.findElement(AppiumBy.accessibilityId("dashboard, back"));
 //         click(backButton);
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //     }
 
 //     public void verifyDiGA1BoxIsAppearsInTheHomePage() {
 //         try {
-//             waitFewSeconds(2);
+//             waitFewSeconds(2000);
 //             androidDriver.findElement(AppiumBy.accessibilityId("diga-box"));
 //         } catch (Exception e) {
 //             Assert.fail("DiGA1 box does not appear ");
@@ -191,13 +191,13 @@
 //         action.perform();
 //         WebElement surveysBox = androidDriver.findElement(AppiumBy.accessibilityId("dashboard-nav-dossier"));
 //         click(surveysBox);
-//         waitFewSeconds(3);
+//         waitFewSeconds(3000);
 //     }
 
 //     private void clickOnMessagesBox() {
 //         WebElement messagesBox = androidDriver.findElement(AppiumBy.accessibilityId("dashboard-nav-conversation"));
 //         click(messagesBox);
-//         waitFewSeconds(3);
+//         waitFewSeconds(3000);
 //     }
 
 //     private void clickOnDiGA1Box() {
@@ -209,13 +209,13 @@
 //         clickOnSurveysBox();
 //         WebElement firstSurvey = androidDriver.findElement(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"main\"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup"));
 //         click(firstSurvey);
-//         waitFewSeconds(5);
+//         waitFewSeconds(5000);
 //         waitUntilVisibleByClassName("android.widget.Button");
 //         WebElement saveButton = androidDriver.findElements(AppiumBy.className("android.widget.Button")).get(1);
 //         scrollToTheBottomOfThePage();
 //         click(saveButton);
 //         waitUntilVisibleByXpath("//android.view.ViewGroup[@content-desc=\"main\"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView[3]");
-//         waitFewSeconds(1);
+//         waitFewSeconds(1000);
 //         WebElement surveyStatus = androidDriver.findElement(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"main\"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView[3]"));
 //         if (!surveyStatus.getText().contains("Status: Complete")) {
 //             Assert.fail("survey status is incorrect");
@@ -242,7 +242,7 @@
 //     }
 
 //     public void verifyThatCanLogoutSuccessfullyFromTheApp() {
-//         waitFewSeconds(2);
+//         waitFewSeconds(2000);
 //         WebElement logoText = androidDriver.findElement(AppiumBy.className("android.widget.TextView"));
 //         if(!logoText.getText().equals("personal. health. digital")) {
 //             Assert.fail("The user should be logged out ");

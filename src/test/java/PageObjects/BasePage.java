@@ -35,7 +35,7 @@ public class BasePage {
         actions.moveToElement(el);
         actions.perform();
         el.click();
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
     }
 
     public void moveToElement(WebElement el) {
@@ -67,12 +67,14 @@ public class BasePage {
     }
 
     public void fillTextById(String text, String el) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(el)));
         WebElement element = driver.findElement(By.id(el));
         click(element);
         element.clear();
-        waitFewSeconds(1);
+        waitFewSeconds(1000);
         element.sendKeys(text);
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
     }
 
     public void fillTextByClassName(String text, String el) {
@@ -111,9 +113,9 @@ public class BasePage {
                 .executeScript("window.scrollTo(0, document.body.scroll)");
     }
 
-    public void waitFewSeconds(int seconds) {
+    public void waitFewSeconds(int milliseconds) {
         try {
-            Thread.sleep(seconds);
+            Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -122,7 +124,7 @@ public class BasePage {
     public void openUrlInTheSameTab(String url) {
         driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t"); // Open tab 2 using CTRL + T keys.
         driver.get(url); // Open URL In 2nd tab
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
     }
 
     public void openUrlInNewTab(String url, int tabNumber) {
@@ -130,7 +132,7 @@ public class BasePage {
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabNumber)); // switches to new tab
         driver.get(url);
-        waitFewSeconds(3);
+        waitFewSeconds(3000);
     }
 
     public void moveToTab(int tabNumber) {
@@ -175,11 +177,11 @@ public class BasePage {
     }
 
     public String getSMSCodefromlist(){
-        waitFewSeconds(3);
+        waitFewSeconds(3000);
         WebElement smscodeis = driver.findElement(By.xpath("//*[contains(text(),'get SMS')]"));
         click(smscodeis);
         logger.debug("Clicked on get sms btn");
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
         driver.findElement(By.xpath("(//li[contains(text(),'for ')])[last()]")).click();
         logger.debug("Clicked on last sms");
         WebElement iframe2 = driver.findElement(By.xpath("(//iframe[@class='smsPreview'])[last()]"));
@@ -202,13 +204,13 @@ public class BasePage {
     }
 
     public void agreeTermsAndConditions() {
-        waitFewSeconds(3);
+        waitFewSeconds(3000);
         WebElement termsCheckbox = driver.findElement(By.id("terms-checkbox"));
         click(termsCheckbox);
         WebElement termsAcceptButton = driver.findElement(By.id("terms-accept-button"));
         click(termsAcceptButton);
         logger.debug("Successfully Checked and accepted the Terms and conditions.");
-        waitFewSeconds(2);
+        waitFewSeconds(2000);
     }
 
 }
