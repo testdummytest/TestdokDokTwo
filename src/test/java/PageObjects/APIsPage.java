@@ -1,18 +1,12 @@
 package PageObjects;
-
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
-
-
 import org.openqa.selenium.WebDriver;
-
 import Framework.DataProviderClass;
 // import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
-
 
 public class APIsPage extends BasePage{
 
@@ -82,7 +76,6 @@ public class APIsPage extends BasePage{
         // baseURI = "https://auth-qa.dev.docdok.ch";
         RequestSpecification request = given();
         DataProviderClass.getProperties();
-        // String patientId = DataProviderClass.PatientId;
         request.header("Authorization","Bearer "+getTokenGeneratedByPassword());
         Response response = request.get("/rest/survey/api/patients/"+DataProviderClass.PatientId+"/survey-definitions");
         // response.prettyPrint();

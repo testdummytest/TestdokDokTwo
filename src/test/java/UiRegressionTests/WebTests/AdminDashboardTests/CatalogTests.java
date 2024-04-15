@@ -1,31 +1,30 @@
 package UiRegressionTests.WebTests.AdminDashboardTests;
-
-import java.util.logging.Logger;
-
 import org.testng.annotations.Test;
-
 import Entities.Admin;
 import Entities.Doctor;
 import Entities.Patient;
 import Framework.DataProviderClass;
 import PageObjects.LoginPage;
 import UiRegressionTests.ChLoginBaseTest;
-import UiRegressionTests.loggersetup;
 import PageObjects.AdminHomePage;
 import PageObjects.DoctorHomePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class CatalogTests extends ChLoginBaseTest {
+    private static final Logger logger = LogManager.getLogger(CatalogTests.class);
 
-    private static final Logger logger = loggersetup.getLogger();
 
     @Test(dataProvider = "existing-admin-doctor-patient", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyAdminUploadEditCatalog(Admin admin,Patient patient, Doctor doctor) {
+        logger.info("Start Test");
         
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsAdmin(admin);
         logger.info("Admin login success");
-        AdminHomePage adminhomepage = new AdminHomePage(driver);
-        String catalogName = adminhomepage.createCatalog(admin);
+        AdminHomePage adminHomepage = new AdminHomePage(driver);
+        String catalogName = adminHomepage.createCatalog(admin);
         
         loginPage.loginAsDoctor(doctor);
         DoctorHomePage doctorHomePage = new DoctorHomePage(driver);
@@ -34,7 +33,7 @@ public class CatalogTests extends ChLoginBaseTest {
 
         loginPage.loginAsAdmin(admin);
         logger.info("Admin login success");
-        adminhomepage.editAndDeleteCatalog(admin, catalogName);    
+        adminHomepage.editAndDeleteCatalog(admin, catalogName);    
     }
     
 }

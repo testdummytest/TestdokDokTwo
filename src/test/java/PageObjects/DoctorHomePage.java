@@ -16,11 +16,11 @@ import org.testng.Assert;
 import Entities.Patient;
 import Framework.DataProviderClass;
 import Framework.Generate;
-import UiRegressionTests.loggersetup;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DoctorHomePage extends BasePage {
-    private static final Logger logger = loggersetup.getLogger();
+    private static final Logger logger = LogManager.getLogger(DoctorHomePage.class);
     WebDriver webDriver;
     String email_id_of_patient;
     public String mobileNumber;
@@ -33,21 +33,12 @@ public class DoctorHomePage extends BasePage {
         WebElement searchButton = driver.findElement(By.id("patient-search-bar-search-button"));
         click(searchButton);
         fillTextById(patient.getEmail(), "patient-search-bar-search-field");
-        waitFewSeconds(5000);
+        waitFewSeconds(5);
         WebElement myPatients = driver.findElement(By.id("myPatients"));
         WebElement myPatient = myPatients.findElement(By.xpath(("//a[contains(@href, '/private/app/patients/PAT')]")));
         click(myPatient);
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("close")));
-            WebElement closeButton = driver.findElement(By.id("close"));
-            click(closeButton);
-
-        } catch (Exception e) {
-            logger.info("Not shown");
-
         }
-    }
+    
 
     private void clickOnPatientsTab() {
         WebElement patientsTab = driver.findElement(By.id("menu.patients"));
@@ -127,7 +118,7 @@ public class DoctorHomePage extends BasePage {
     public void deleteEvent() {
         WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(), 'Delete')]"));
         click(deleteButton);
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.confirm = function(){return true;}");
         try {
@@ -135,7 +126,7 @@ public class DoctorHomePage extends BasePage {
         } catch (Exception e) {
             System.out.println("No alert present!");
         }
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
     }
 
     public void addAnEventInPastTime() {
@@ -233,17 +224,11 @@ public class DoctorHomePage extends BasePage {
         click(submitButton);
     }
 
-    public void createanddeletepatcallbackfunc(Patient patient) {
+    public void createAndDeletePatientCallbackFunc(Patient patient) {
         clickOnPatientsTab();
         clickOnCreatePatientButton();
         fillMandatoryFields(patient);
         clickOnSaveButton();
-        try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button");
-        }
         try {
             Thread.sleep(3000);
             WebElement closeButton = driver.findElement(By.xpath("(//button[@id=\"close\"])[2]"));
@@ -267,18 +252,18 @@ public class DoctorHomePage extends BasePage {
 
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
             logger.info("Cliked on More svg menu opens");
-            waitFewSeconds(3000);
+            waitFewSeconds(3);
 
             driver.findElement(By.xpath("//*[text()='Delete Patient']")).click();
-            waitFewSeconds(2000);
+            waitFewSeconds(2);
             
             String actualMessage = driver.findElement(By.id("infopanel")).getText();
             String expectedMessage = "Patient deleted successfully";
             Assert.assertEquals(actualMessage, expectedMessage);
-            logger.info("Sucessfully Non active patient deleted!!");
+            logger.info("Sucessfully deleted the Non active patient !!");
 
         } catch(Exception e){
-            logger.info("Error in deleting non active patient!!");
+            logger.error("Error in deleting non active patient!!");
         }
         
     }
@@ -289,17 +274,11 @@ public class DoctorHomePage extends BasePage {
         fillMandatoryFields(patient);
         clickOnSaveButton();
         try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button or pop up not shown");
-        }
-        try {
             Thread.sleep(3000);
             WebElement closeButton = driver.findElement(By.xpath("(//button[@id=\"close\"])[2]"));
             click(closeButton);
         } catch (Exception e) {
-            logger.info("Error in clicking close button or button no shows");
+            logger.debug("Error in clicking close button or button no shows");
         }
         
         logoutFromUser();
@@ -312,17 +291,11 @@ public class DoctorHomePage extends BasePage {
         // chooseIcdCode();
         clickOnSaveButton();
         try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button");
-        }
-        try {
             Thread.sleep(3000);
             WebElement closeButton = driver.findElement(By.xpath("(//button[@id=\"close\"])[2]"));
             click(closeButton);
         } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button");
+            logger.debug("Error in clicking close/No thanks button");
         }
 
         logoutFromUser();
@@ -360,11 +333,11 @@ public class DoctorHomePage extends BasePage {
     private void clickOnSaveButton() {
         WebElement saveButton = driver.findElement(By.id("save"));
         click(saveButton);
-        waitFewSeconds(2500);
+        waitFewSeconds(2);
     }
 
     private void clickOnCreatePatientButton() {
-        waitFewSeconds(5000);
+        waitFewSeconds(5);
         WebElement dayButton = driver.findElement(By.id("createPatient-table"));
         click(dayButton);
     }
@@ -432,7 +405,7 @@ public class DoctorHomePage extends BasePage {
         WebElement sendSurveyButton = driver.findElement(By.id("send-survey-button"));
         click(sendSurveyButton);
         fillTextById("vas 12 ", "sendSurveyFromPatient-surveys-search-field");
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
         WebElement agreeCheckbox = driver.findElement(By.cssSelector("input[type='checkbox']"));
         click(agreeCheckbox);
         WebElement submitButton = driver.findElement(By.id("save"));
@@ -448,7 +421,7 @@ public class DoctorHomePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4//span[text()=\"Patients\"]")));
         assert driver.findElement(By.xpath("//h4//span[text()=\"Patients\"]")).isDisplayed();
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Patient Page");
+        logger.debug("Checked Patient Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Messages\"])[2]")));
         driver.findElement(By.xpath("(//span[text()=\"Messages\"])[2]")).click();
@@ -456,7 +429,7 @@ public class DoctorHomePage extends BasePage {
         assert driver.findElement(By.xpath("(//span[text()=\"Messages\"])[2]")).isDisplayed();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Messages Page");
+        logger.debug("Checked Messages Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Catalog\"])")));
         driver.findElement(By.xpath("(//span[text()=\"Catalog\"])")).click();
@@ -464,7 +437,7 @@ public class DoctorHomePage extends BasePage {
         assert driver.findElement(By.xpath("//h4//span[text()=\"Catalog\"]")).isDisplayed();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Catalog Page");
+        logger.debug("Checked Catalog Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Surveys\"])")));
         driver.findElement(By.xpath("(//span[text()=\"Surveys\"])")).click();
@@ -472,23 +445,23 @@ public class DoctorHomePage extends BasePage {
         assert driver.findElement(By.xpath("//h4//span[text()=\"Surveys\"]")).isDisplayed();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Surveys Page");
+        logger.debug("Checked Surveys Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Profile\"])")));
         driver.findElement(By.xpath("(//span[text()=\"Profile\"])")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4//span[contains(text(),\"Welcome\")]")));
         assert driver.findElement(By.xpath("//h4//span[contains(text(),\"Welcome\")]")).isDisplayed();
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Profile Page");
+        logger.debug("Checked Profile Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Team\"])")));
         driver.findElement(By.xpath("(//span[text()=\"Team\"])")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4//span[text()=\"Team\"]")));
         assert driver.findElement(By.xpath("//h4//span[text()=\"Team\"]")).isDisplayed();
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Team Page");
+        logger.debug("Checked Team Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Studies\"])")));
         driver.findElement(By.xpath("(//span[text()=\"Studies\"])")).click();
@@ -496,7 +469,7 @@ public class DoctorHomePage extends BasePage {
         assert driver.findElement(By.xpath("//h4//span[text()=\"Studies\"]")).isDisplayed();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
-        logger.info("Checked Studies Page");
+        logger.debug("Checked Studies Page");
 
         logger.info("Tapping on each feature navigated to respective screens.");
 
@@ -508,17 +481,11 @@ public class DoctorHomePage extends BasePage {
         String x = fillMandatoryFieldsFetchEmailString(patient);
         clickOnSaveButton();
         try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button or pop up not shown");
-        }
-        try {
             Thread.sleep(3000);
             WebElement closeButton = driver.findElement(By.xpath("(//button[@id=\"close\"])[2]"));
             click(closeButton);
         } catch (Exception e) {
-            logger.info("Error in clicking close button or button no shows");
+            logger.error("Error in clicking close button or button no shows");
         }
         logoutFromUser();
         return x;
@@ -542,17 +509,11 @@ public class DoctorHomePage extends BasePage {
         String x = fillMandatoryFieldsFetchMobileNumberString(patient);
         clickOnSaveButton();
         try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button or pop up not shown");
-        }
-        try {
             Thread.sleep(3000);
             WebElement closeButton = driver.findElement(By.xpath("(//button[@id=\"close\"])[2]"));
             click(closeButton);
         } catch (Exception e) {
-            logger.info("Error in clicking close button or button no shows");
+            logger.error("Error in clicking close button or button no shows");
         }
         logoutFromUser();
         return x;
@@ -623,7 +584,7 @@ public class DoctorHomePage extends BasePage {
         setChildEmail(patient.getChildEmail());
         setChildPatientGender();
         setChildLanguage();
-        logger.info("modify docorhomepage done.");
+        logger.info("Modify docorhomepage complete.");
 
     }
 
@@ -635,17 +596,11 @@ public class DoctorHomePage extends BasePage {
         // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         // wait.until(ExpectedConditions.elementToBeClickable(By.id("close")));
         try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button");
-        }
-        try {
             Thread.sleep(3000);
             WebElement closeButton = driver.findElement(By.xpath("(//button[@id=\"close\"])[2]"));
             click(closeButton);
         } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button");
+            logger.error("Error in clicking close/No thanks button");
         }
         logoutFromUser();
     }
@@ -653,7 +608,7 @@ public class DoctorHomePage extends BasePage {
     public void verifyThatThePhysicianDoctorLoggedInSuccessfully() {
         //agreeTermsAndConditions();
         logger.info("WELCOME TO PHYSSICIAN HOMEPAGE");
-        waitFewSeconds(5000);
+        waitFewSeconds(5);
         try {
             driver.findElement(By.xpath("//*[text()='assignment']"));
             logger.info("Physician verification is successfull");
@@ -663,7 +618,7 @@ public class DoctorHomePage extends BasePage {
     }
     public void verifyThatTheDocAssistLoggedInSuccessfully() {
         logger.info("WELCOME TO Doc Assistant HOMEPAGE");
-        waitFewSeconds(5000);
+        waitFewSeconds(5);
 
         try {
             // driver.findElement(By.xpath("//*[text()='assignment']"));
@@ -683,7 +638,7 @@ public class DoctorHomePage extends BasePage {
 
         driver.findElement(By.xpath("//*[text()='App Activated']")).click();
         logger.info("Clicked on App activated filter");
-        waitFewSeconds(6000);
+        waitFewSeconds(6);
         try{
             //find and store activatedstatus
             WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
@@ -694,29 +649,27 @@ public class DoctorHomePage extends BasePage {
             }
         }
         catch(Exception e){
-            logger.info("Element not found So in catch block executes..: " + e.getMessage());
             logger.info("Verified that this page has not any ACTIVATED STATUS for a paient");
             //click on more svg
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
             logger.info("Cliked on More svg menu opens");
-            waitFewSeconds(3000);
+            waitFewSeconds(3);
             driver.findElement(By.xpath("//*[text()='Renew invitation']")).click();
-            waitFewSeconds(2000);
-            logger.info("Cliked on renew invitation btn..");
+            waitFewSeconds(2);
+            logger.debug("Cliked on renew invitation btn..");
             try{
-                logger.info("In try block");
+                logger.info("Enter in try block");
 
-                waitFewSeconds(4000);
+                waitFewSeconds(4);
                 //verify msg: Invitation Email was sent again.
                 WebElement ele = driver.findElement(By.xpath("//*[text()='Invitation Email was sent again.']"));
                 String ActualTitle = ele.getText();
                 String ExpectedTitle = "Invitation Email was sent again.";
-                waitFewSeconds(2000);
+                waitFewSeconds(2);
                 Assert.assertEquals(ExpectedTitle, ActualTitle);
                 logger.info("Invitation App Message is successfully verified");
-                // waitFewSeconds(5000);
+                // waitFewSeconds(5);
             }catch(Exception exe){
-                logger.info("Into catch block");
                 Assert.fail("Titles do not match");
             }
 
@@ -732,7 +685,7 @@ public class DoctorHomePage extends BasePage {
     public void searchPatientAndAppActivatedOrNotCheck(){
 
         WebElement searchButton = driver.findElement(By.id("patient-search-bar-search-button"));
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
         click(searchButton);
         DataProviderClass.getProperties(); // Load properties
         fillTextById(DataProviderClass.PatientUname, "patient-search-bar-search-field");
@@ -741,7 +694,7 @@ public class DoctorHomePage extends BasePage {
         WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
         if(chkingActivatedStatus.isDisplayed()){
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
-            waitFewSeconds(3000);
+            waitFewSeconds(3);
             WebElement renewInvitationElement = driver.findElement(By.xpath("//li[@data-test='renewInvitation-action']"));
             String tabIndexAttribute = renewInvitationElement.getAttribute("tabindex");
             boolean isDisabled = tabIndexAttribute != null && tabIndexAttribute.equals("-1");
@@ -768,16 +721,10 @@ public class DoctorHomePage extends BasePage {
         //click on shoe more arrow btn
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//*[contains(@aria-label,'Show more')])[1]"))).click();
-        waitFewSeconds(4000);
+        waitFewSeconds(4);
     }
 
     public void EditPrimaryCancelProfile(){
-        try {
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//span[text()=\"No Thanks\"]")).click();
-        } catch (Exception e) {
-            logger.info("Error in clicking close/No thanks button or pop up not shown");
-        }
         WebElement contactEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpath); 
         logger.info("Edit btn clicked");
@@ -790,112 +737,112 @@ public class DoctorHomePage extends BasePage {
         WebElement primaryEditSalutation = driver.findElement(By.xpath("//input[@id='patientData-salutation']"));
         wait.until(ExpectedConditions.elementToBeClickable(primaryEditSalutation));
         primaryEditSalutation.click();
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
         //to clear the existing code in field
         int lengthSlautation = primaryEditSalutation.getAttribute("value").length();
         for (int i = 0; i < lengthSlautation; i++) {
             primaryEditSalutation.sendKeys(Keys.BACK_SPACE);
         }//end
         primaryEditSalutation.sendKeys("Patient");
-        logger.info("salutation done");
+        logger.debug("salutation done");
         //adding paths for a edit firstname:
         WebElement primaryEditfirstname = driver.findElement(By.xpath("//input[@name='firstName']"));
         primaryEditfirstname.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         primaryEditfirstname.clear();
         primaryEditfirstname.sendKeys("Automation-"+DataProviderClass.getRandomString());
-        waitFewSeconds(1000);
-        logger.info("firstname done");
+        waitFewSeconds(1);
+        logger.debug("firstname done");
 		
         //adding paths for a edit lastname:
         WebElement primaryEditLastName = driver.findElement(By.xpath("//input[@name='lastName']"));
         primaryEditLastName.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         primaryEditLastName.clear();
         primaryEditLastName.sendKeys("LastName-"+DataProviderClass.getRandomString());
-        waitFewSeconds(1000);
-        logger.info("lastname done");
+        waitFewSeconds(1);
+        logger.debug("lastname done");
 		
         //adding paths for a edit birthdate:
         WebElement primaryEditBirthDate = driver.findElement(By.xpath("//input[@id='patientData-birthdate']"));
         primaryEditBirthDate.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         primaryEditBirthDate.clear();
         primaryEditBirthDate.sendKeys("20/01/1998");
-        waitFewSeconds(2000);
-        logger.info("birthday done");
+        waitFewSeconds(2);
+        logger.debug("birthday done");
 
         JavascriptExecutor jsdown = (JavascriptExecutor) driver;
         jsdown.executeScript("window.scrollBy(0, 200);");
 
         WebElement clickGenderDropdown = driver.findElement(By.xpath("//div[@aria-pressed='false' and @role='button']"));
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
         clickGenderDropdown.click();
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
         clickGenderDropdown.click();
-        logger.info("clicked dropdown");
-        waitFewSeconds(2000);
+        logger.debug("clicked dropdown");
+        waitFewSeconds(2);
         WebElement current_selected_gender_element = driver.findElement(By.xpath("//input[@name='gender']"));
         String genderVal = current_selected_gender_element.getAttribute("value");
-        logger.info("gender value: " + genderVal);
+        logger.debug("gender value: " + genderVal);
 
         String genderxpath;
         if ("MALE".equals(genderVal)) {
             genderxpath = "//span[text()='Female']";
-            logger.info("first..");
+            logger.debug("first..");
         } else if("FEMALE".equals(genderVal)) {
             genderxpath = "//span[text()='Male']";
-            logger.info("second");
+            logger.debug("second");
         } else{
             genderxpath = "//span[text()='Male']";
-            logger.info("third");
+            logger.debug("third");
         }
 
-        logger.info("After update val:" + genderxpath);
+        logger.debug("After update val:" + genderxpath);
 
         WebElement selectDropdownOption = driver.findElement(By.xpath(genderxpath));
-        waitFewSeconds(4000);
-        logger.info("selected option:" +selectDropdownOption);
+        waitFewSeconds(4);
+        logger.debug("selected option:" +selectDropdownOption);
         selectDropdownOption.click();
 
-        logger.info("clicked option");
+        logger.debug("clicked option");
 
         //adding paths for a edit socialsecurity no/insurance no:
         WebElement primaryEditSocialSecurityNo = driver.findElement(By.xpath("//input[@name='insuranceNumber']"));
         primaryEditSocialSecurityNo.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         primaryEditSocialSecurityNo.clear();
         primaryEditSocialSecurityNo.sendKeys(DataProviderClass.getRandomMobileNumber());
-        waitFewSeconds(1000);
-        logger.info("insurance no done");
+        waitFewSeconds(1);
+        logger.debug("insurance no done");
         //adding paths for a edit patient no:
         WebElement primaryEditPatientNo = driver.findElement(By.xpath("//input[@name='lifelongId']"));
         primaryEditPatientNo.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         primaryEditPatientNo.clear();
         primaryEditPatientNo.sendKeys(DataProviderClass.getRandomMobileNumber());
-        waitFewSeconds(1000);
-        logger.info("patient num done");
+        waitFewSeconds(1);
+        logger.debug("patient num done");
         WebElement contactFieldSave = driver.findElement(By.xpath("//button[@id='save']"));
         click(contactFieldSave);
-        logger.info("Successfully saved primary fields..");
-        waitFewSeconds(4000);
+        logger.debug("Successfully saved primary fields..");
+        waitFewSeconds(4);
         //cancel field process for primary fields
         WebElement contactEditpathAgain = driver.findElement(By.xpath("//span[text()='Edit']"));
         click(contactEditpathAgain); 
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         WebElement primaryEditfirstnameAgain = driver.findElement(By.xpath("//input[@name='firstName']"));
         // primaryEditfirstnameAgain.click();
         click(primaryEditfirstnameAgain);
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         primaryEditfirstnameAgain.clear();
         primaryEditfirstnameAgain.sendKeys("AGAIN Updated First Name");
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         WebElement cancelBtnpath = driver.findElement(By.xpath("//span[text()='Cancel']"));
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
         cancelBtnpath.click();
-        logger.info("Cancel btn click for primary fields success");
-        waitFewSeconds(6000);
+        logger.debug("Cancel btn click for primary fields success");
+        waitFewSeconds(6);
 
     }
 
@@ -909,55 +856,54 @@ public class DoctorHomePage extends BasePage {
         js.executeScript("window.scrollBy(0, -600);");
         //end
         WebElement contactDetailsEditpath = driver.findElement(By.xpath("//span[text()='Edit']"));
-        // waitFewSeconds(2000);
+        // waitFewSeconds(2);
 
         click(contactDetailsEditpath); 
-        logger.info("Edit btn clicked");
+        logger.debug("Edit btn clicked");
 
         //adding paths for a edit mobno:
         WebElement contactEditMobileno = driver.findElement(By.xpath("//input[@name='mobileNumber']"));
         
         contactEditMobileno.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         contactEditMobileno.clear();
         // update dynamic mob here
         contactEditMobileno.sendKeys(DataProviderClass.randomNumberGetWithPlusFormat());
-        waitFewSeconds(1000);
-        logger.info("mobileno updated");
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
+        logger.debug("mobileno updated");
+        waitFewSeconds(1);
         WebElement contactFieldSave = driver.findElement(By.xpath("//button[@id='save']"));
         click(contactFieldSave);
-        waitFewSeconds(6000);
-        logger.info("Saved successfully");
-
+        waitFewSeconds(6);
+        logger.debug("Saved successfully");
         //used to scroll up, use because element not seen and clickable
         JavascriptExecutor jsupnew = (JavascriptExecutor) driver;
         jsupnew.executeScript("window.scrollBy(0, -500);");
         //end
-        logger.info("Again scroll up");
-        waitFewSeconds(6000);
+        logger.debug("Again scroll up");
+        waitFewSeconds(6);
         //end edit and save profile process
 
         //for cancel process start
         //edit btn click
         WebElement contactDetailsEditpathTwo = driver.findElement(By.xpath("//span[text()='Edit']"));
-        logger.info("Secondtime find xath of edit");
+        logger.debug("Secondtime find xath of edit");
         click(contactDetailsEditpathTwo); 
-        logger.info("for Cancel process Edit btn clicked");
+        logger.debug("for Cancel process Edit btn clicked");
         WebElement contactEditEmailTwo = driver.findElement(By.xpath("//input[@name='email']"));
         contactEditEmailTwo.click();
-        waitFewSeconds(1000);
+        waitFewSeconds(1);
         contactEditEmailTwo.clear();
         contactEditEmailTwo.sendKeys("updatedemailThreeNewCancel@gmail.com");
-        waitFewSeconds(2000);
-        logger.info("Cancel email field updated");
+        waitFewSeconds(2);
+        logger.debug("Cancel email field updated");
         //target cancel btn click
         //end cancel process
         WebElement cancelBtnpath = driver.findElement(By.xpath("//span[text()='Cancel']"));
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
         cancelBtnpath.click();
-        logger.info("Cancel btn click success");
-        waitFewSeconds(4000);
+        logger.debug("Cancel btn click success");
+        waitFewSeconds(4);
 
     }
 
@@ -970,7 +916,7 @@ public class DoctorHomePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='user-search-bar-search-field']")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='user-search-bar-search-field']"))).sendKeys(catalogName);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='"+catalogName+"']/../../../..//div//input/../.."))).click();
-        logger.info("Selected checkbox");
+        logger.debug("Selected checkbox");
         WebElement submitButton = driver.findElement(By.xpath("//span[text()='Send']"));
         click(submitButton);
         logger.info("Clicked on Send button");

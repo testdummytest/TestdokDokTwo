@@ -16,13 +16,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import UiRegressionTests.loggersetup;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BasePage {
     String tmpPassword;
 
-    private static final Logger logger = loggersetup.getLogger();
+    private static final Logger logger = LogManager.getLogger(BasePage.class);
     WebDriver driver;
 
     public BasePage(WebDriver driver) {
@@ -35,7 +35,7 @@ public class BasePage {
         actions.moveToElement(el);
         actions.perform();
         el.click();
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
     }
 
     public void moveToElement(WebElement el) {
@@ -114,7 +114,6 @@ public class BasePage {
     public void waitFewSeconds(int seconds) {
         try {
             Thread.sleep(seconds);
-            logger.info("inside sleep");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -123,7 +122,7 @@ public class BasePage {
     public void openUrlInTheSameTab(String url) {
         driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t"); // Open tab 2 using CTRL + T keys.
         driver.get(url); // Open URL In 2nd tab
-        waitFewSeconds(2000);
+        waitFewSeconds(2);
     }
 
     public void openUrlInNewTab(String url, int tabNumber) {
@@ -131,7 +130,7 @@ public class BasePage {
         ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabNumber)); // switches to new tab
         driver.get(url);
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
     }
 
     public void moveToTab(int tabNumber) {
@@ -143,7 +142,7 @@ public class BasePage {
         try {
             Thread.sleep(5000);
         } catch (Exception e) {
-            logger.info("Sleep didn't work. ");
+            logger.error("Sleep didn't work. ");
         }
         WebElement avatarButton = driver.findElement(By.id("avatar-button"));
         click(avatarButton);
@@ -163,7 +162,7 @@ public class BasePage {
             click(OkButton);
 
         } catch (Exception e) {
-            logger.info("Welcome not shown ");
+            logger.error("Welcome not shown ");
 
         }
     }
@@ -176,16 +175,16 @@ public class BasePage {
     }
 
     public String getSMSCodefromlist(){
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
         WebElement smscodeis = driver.findElement(By.xpath("//*[contains(text(),'get SMS')]"));
         click(smscodeis);
-        logger.info("Clicked on get sms btn");
-        waitFewSeconds(2000);
+        logger.debug("Clicked on get sms btn");
+        waitFewSeconds(2);
         driver.findElement(By.xpath("(//li[contains(text(),'for ')])[last()]")).click();
-        logger.info("Clicked on last sms");
+        logger.debug("Clicked on last sms");
         WebElement iframe2 = driver.findElement(By.xpath("(//iframe[@class='smsPreview'])[last()]"));
         driver.switchTo().frame(iframe2);
-        logger.info("Frame switched");
+        logger.debug("Frame switched");
         String smsText = driver.findElement(By.xpath("(//body//div)[last()]")).getText();
         logger.info(smsText);
         String[] passwordTmp = smsText.split(":");
@@ -196,20 +195,20 @@ public class BasePage {
     }
 
     public void setCodeReceivedToTheNewUser(String password) {
-        logger.info(password);
+        logger.debug(password);
         fillTextById(password, "password");
         WebElement signInButton = driver.findElement(By.id("kc-login"));
         click(signInButton);
     }
 
     public void agreeTermsAndConditions() {
-        waitFewSeconds(3000);
+        waitFewSeconds(3);
         WebElement termsCheckbox = driver.findElement(By.id("terms-checkbox"));
         click(termsCheckbox);
         WebElement termsAcceptButton = driver.findElement(By.id("terms-accept-button"));
         click(termsAcceptButton);
-        logger.info("Successfully Checked and accepted the Terms and conditions.");
-        waitFewSeconds(2000);
+        logger.debug("Successfully Checked and accepted the Terms and conditions.");
+        waitFewSeconds(2);
     }
 
 }

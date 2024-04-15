@@ -12,15 +12,16 @@ import PageObjects.LoginPage;
 import PageObjects.PatientHomePage;
 import PageObjects.TestingUtilPage;
 import UiRegressionTests.ChLoginBaseTest;
-import UiRegressionTests.loggersetup;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CreatePatientTests extends ChLoginBaseTest {
 
-    private static final Logger logger = loggersetup.getLogger();
+    private static final Logger logger = LogManager.getLogger(CreatePatientTests.class);
 
     @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatTheDoctorCanCreatePatientSuccessfully(Patient patient, Admin admin, Doctor doctor) {
+
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);
         DoctorHomePage doctorHomePage = new DoctorHomePage(driver);
@@ -34,6 +35,7 @@ public class CreatePatientTests extends ChLoginBaseTest {
 
     @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
     public void shouldVerifyThatThePatientResetPasswordSuccessfully(Patient patient, Admin admin, Doctor doctor) {
+        logger.info("Start Test");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginAsDoctor(doctor);
         DoctorHomePage doctorHomePage = new DoctorHomePage(driver);
@@ -46,20 +48,6 @@ public class CreatePatientTests extends ChLoginBaseTest {
         patientHomePage.verifyThatTheUserLoggedInSuccessfully();
         patientHomePage.forgotpasswordbyPatient(patient, admin, doctor, email);
     }
-    // @Test(dataProvider = "create-patient-by-doctor-data", dataProviderClass = DataProviderClass.class)
-    // public void shouldVerifyThatTheDoctorCanCreatePatientSuccessfullyWithSMSCode(Patient patient, Admin admin, Doctor doctor) {
-    //     LoginPage loginPage = new LoginPage(driver);
-    //     loginPage.loginAsDoctor(doctor);
-    //     DoctorHomePage doctorHomePage = new DoctorHomePage(driver);
-    //     String mobileNumber = doctorHomePage.createPatientByTheDoctorFetchMobileNumberString(patient);
-    //     logger.info(mobileNumber);
-    //     TestingUtilPage testingUtilPage = new TestingUtilPage(driver);
-    //     testingUtilPage.openActivationUrlByTestingUtilForSMSAndEmail(admin, mobileNumber);
-    //     loginPage.activateTheUserBySettingNewPassword(patient);
-    //     PatientHomePage patientHomePage = new PatientHomePage(driver);
-    //     patientHomePage.verifyThatTheUserLoggedInSuccessfully();
-    // }
-
     
 }
 

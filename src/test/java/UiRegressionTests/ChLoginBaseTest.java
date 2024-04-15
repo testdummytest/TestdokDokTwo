@@ -19,8 +19,8 @@ import org.testng.annotations.BeforeMethod;
 
 import Framework.DataProviderClass;
 import io.appium.java_client.android.AndroidDriver;
-import java.util.logging.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class ChLoginBaseTest {
@@ -28,13 +28,13 @@ public class ChLoginBaseTest {
     
     public WebDriver driver;
     public AndroidDriver androidDriver;
-    private static final Logger logger = loggersetup.getLogger();
+    private static final Logger logger = LogManager.getLogger(ChLoginBaseTest.class);
 
     @BeforeMethod
     public void setup() throws InterruptedException {
         System.setProperty("webdriver.chrome.verboseLogging", "true");
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
