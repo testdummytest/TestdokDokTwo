@@ -19,6 +19,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install Appium
+      run: npm install -g appium@latest
+
     - name: Start Appium Server and Run Tests
       run: |
         appium &
