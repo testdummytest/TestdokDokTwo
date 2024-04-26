@@ -34,7 +34,7 @@ public class MobileHomePage extends MobileBasePage {
         dc.setCapability("automationName", "UiAutomator2");
 
         androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4724/wd/hub"), dc);
-        waitFewSeconds(6000);
+        waitFewSeconds(10000);
     }
 
     public void fillUserNameAndPasswordForAnExistingPatient(Patient patient) {
