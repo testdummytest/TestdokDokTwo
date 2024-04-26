@@ -19,11 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Build with Maven
-      run: mvn -B clean test
-
-    - name: Start Appium Server
-      run: appium
-
-    - name: Run Appium Tests
-      run: mvn -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
+    - name: Start Appium Server and Run Tests
+      run: |
+        appium &
+        mvn -B clean test -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
