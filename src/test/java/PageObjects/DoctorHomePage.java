@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
+import org.openqa.selenium.Alert;
 
 import Entities.Patient;
 import Framework.DataProviderClass;
@@ -102,30 +102,49 @@ public class DoctorHomePage extends BasePage {
     }
 
     public void deleteEventAndVerifyThatTheEventIsDeleted() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("fc-timegrid-event-harness-inset")));
         List<WebElement> events = driver.findElements(By.className("fc-timegrid-event-harness-inset"));
         Integer eventsSize = events.size();
+        logger.info("Before delete:" + eventsSize);
         WebElement theLastEvent = events.get(events.size() - 1);
         click(theLastEvent);
         deleteEvent();
+        waitFewSeconds(40);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("fc-timegrid-event-harness-inset")));
         List<WebElement> eventsAfterDeleteAnEvent = driver
                 .findElements(By.className("fc-timegrid-event-harness-inset"));
         Integer eventsSizeAfterDeleteAnEvent = eventsAfterDeleteAnEvent.size();
+        
+        logger.info("After delete:" + eventsSizeAfterDeleteAnEvent);
 
         Assert.assertEquals(eventsSizeAfterDeleteAnEvent, eventsSize - 1, "The event does not deleted ! ");
+        logger.info("Event is successfully deleted");
     }
 
     public void deleteEvent() {
-        WebElement deleteButton = driver.findElement(By.xpath("//*[contains(text(), 'Delete')]"));
-        click(deleteButton);
-        waitFewSeconds(1000);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.confirm = function(){return true;}");
-        try {
-            driver.switchTo().alert().accept();
-        } catch (Exception e) {
-            System.out.println("No alert present!");
-        }
+
+        // Click on the span element using JavaScript
+        String script = "var xpath = \"//span[text()='Delete']\";\n" +
+                        "var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;\n" +
+                        "if (matchingElement) {\n" +
+                        "    matchingElement.click();\n" +
+                        "} else {\n" +
+                        "    console.error('Element not found');\n" +
+                        "}";
+        ((JavascriptExecutor)driver).executeScript(script);
+
+        // Wait for the alert to be present
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
+        wait.until(ExpectedConditions.alertIsPresent());
+
+        // Switch to the alert and accept it
+        Alert alert = driver.switchTo().alert();
         waitFewSeconds(2000);
+        alert.accept();
+        waitFewSeconds(1000);
+        driver.navigate().refresh();
+        logger.info("Got the delete alert for an event and accepted successfully");
     }
 
     public void addAnEventInPastTime() {
@@ -635,9 +654,10 @@ public class DoctorHomePage extends BasePage {
 
     private void sendInvitationToPatient() {
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(100));
         driver.findElement(By.xpath("//*[text()='App Activated']")).click();
         logger.info("Clicked on App activated filter");
-        waitFewSeconds(6000);
+        waitFewSeconds(4000);
         try{
             //find and store activatedstatus
             WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
@@ -652,7 +672,8 @@ public class DoctorHomePage extends BasePage {
             //click on more svg
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
             logger.info("Cliked on More svg menu opens");
-            waitFewSeconds(3000);
+            // waitFewSeconds(3000);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Renew invitation']")));
             driver.findElement(By.xpath("//*[text()='Renew invitation']")).click();
             waitFewSeconds(2000);
             logger.debug("Cliked on renew invitation btn..");
@@ -664,7 +685,7 @@ public class DoctorHomePage extends BasePage {
                 WebElement ele = driver.findElement(By.xpath("//*[text()='Invitation Email was sent again.']"));
                 String ActualTitle = ele.getText();
                 String ExpectedTitle = "Invitation Email was sent again.";
-                waitFewSeconds(2000);
+                // waitFewSeconds(2000);
                 Assert.assertEquals(ExpectedTitle, ActualTitle);
                 logger.info("Invitation App Message is successfully verified");
                 // waitFewSeconds(5000);
@@ -683,17 +704,19 @@ public class DoctorHomePage extends BasePage {
 
     public void searchPatientAndAppActivatedOrNotCheck(){
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(100));
         WebElement searchButton = driver.findElement(By.id("patient-search-bar-search-button"));
         waitFewSeconds(2000);
         click(searchButton);
         DataProviderClass.getProperties(); // Load properties
         fillTextById(DataProviderClass.PatientUname, "patient-search-bar-search-field");
-        waitFewSeconds(7000);
+        waitFewSeconds(4000);
         //find and store activatedstatus
         WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
         if(chkingActivatedStatus.isDisplayed()){
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
-            waitFewSeconds(3000);
+            // waitFewSeconds(3000);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@data-test='renewInvitation-action']")));
             WebElement renewInvitationElement = driver.findElement(By.xpath("//li[@data-test='renewInvitation-action']"));
             String tabIndexAttribute = renewInvitationElement.getAttribute("tabindex");
             boolean isDisabled = tabIndexAttribute != null && tabIndexAttribute.equals("-1");

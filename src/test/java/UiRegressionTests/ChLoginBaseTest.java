@@ -54,12 +54,10 @@ public class ChLoginBaseTest {
         // Take screenshot
         if (result.getStatus() == ITestResult.FAILURE)
             takeScreenshot(methodName);
-
         // Quit the WebDriver
         if (driver != null) {
             driver.quit();
         }
-
     }
 
     private void takeScreenshot(String methodNametestName) {

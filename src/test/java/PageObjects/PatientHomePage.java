@@ -35,7 +35,7 @@ public class PatientHomePage extends BasePage {
 
     public void respectiveScreenForPateint() {
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Home'])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
@@ -58,15 +58,15 @@ public class PatientHomePage extends BasePage {
         driver.findElement(By.xpath("(//span[text()=\"Profile\"])[2]")).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4//span[contains(text(),\"Welcome\")]")));
         assert driver.findElement(By.xpath("//h4//span[contains(text(),\"Welcome\")]")).isDisplayed();
-        waitFewSeconds(2000);
+        // waitFewSeconds(2000);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])"))).click();
         // driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
         logger.debug("Checked Profile Page");
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Appointments\"])[1]"))).click();
         // driver.findElement(By.xpath("(//span[text()=\"Appointments\"])[2]")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()=\"Time\"]")));
-        assert driver.findElement(By.xpath("//span[text()=\"Time\"]")).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Time']")));
+        assert driver.findElement(By.xpath("//span[text()='Time']")).isDisplayed();
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//span[text()=\"Home\"])[1]")));
         driver.findElement(By.xpath("(//span[text()=\"Home\"])[1]")).click();
         logger.debug("Checked Appointments Page");

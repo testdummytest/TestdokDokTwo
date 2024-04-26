@@ -99,6 +99,10 @@ public class DataProviderClass {
                 StudyName = prop.getProperty("stageStudy");
 
 
+            }else{
+
+                MobilePatientUname = prop.getProperty("prodpatientUsernameMobile");
+                MobilePatientPass = prop.getProperty("prodpatientPasswordMobile");
             }
         } 
         catch (IOException e) {

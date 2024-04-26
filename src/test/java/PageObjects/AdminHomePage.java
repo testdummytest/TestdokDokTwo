@@ -32,11 +32,8 @@ public class AdminHomePage extends BasePage{
         //click on the teambox
         clickOnTeamBoxAtHomePage();
         clickOnDoctorAssistantCreateBtn();
-
         fillMandatoryFieldsForMPA(admin);
-
         clickOnSaveButton();
-        
         logoutFromUser();
     }
 
@@ -56,7 +53,6 @@ public class AdminHomePage extends BasePage{
         //click on the teambox
         clickOnClinicsPageSideTab();
         clickOnCreateClinicBtn();
-
         fillFieldsForClinic(admin);
         logger.debug("Successfully filled the clinic name..");
         clickOnSaveButton();
@@ -685,9 +681,10 @@ public class AdminHomePage extends BasePage{
     //this func executes the catch block if not find element
     private void sendInvitationToPatient() {
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(100));
         driver.findElement(By.xpath("//*[text()='App Activated']")).click();
         logger.info("Clicked on App activated filter");
-        waitFewSeconds(6000);
+        waitFewSeconds(4000);
 
         try{
             //find and store activatedstatus
@@ -710,12 +707,13 @@ public class AdminHomePage extends BasePage{
             logger.debug("Cliked on renew invitation btn..");
             try{
                 logger.debug("Enter in try block");
-                waitFewSeconds(4000);
+                // waitFewSeconds(2000);
+                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Invitation Email was sent again.']")));
                 //verify msg: Invitation Email was sent again.
                 WebElement ele = driver.findElement(By.xpath("//*[text()='Invitation Email was sent again.']"));
                 String ActualTitle = ele.getText();
                 String ExpectedTitle = "Invitation Email was sent again.";
-                waitFewSeconds(2000);
+                // waitFewSeconds(2000);
                 Assert.assertEquals(ExpectedTitle, ActualTitle);
                 logger.info("Invitation App Message is successfully verified");
 
@@ -741,9 +739,10 @@ public class AdminHomePage extends BasePage{
 
     //this func executes the catch block if not find element
     private void sendInvitationToUsersTabUser() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(100));
         driver.findElement(By.xpath("//*[text()='App Activated']")).click();
         logger.debug("Clicked on App activated filter");
-        waitFewSeconds(6000);
+        waitFewSeconds(4000);
         try{
             //find and store activatedstatus
             WebElement chkingActivatedStatus = driver.findElement(By.xpath("//*[contains(@d,'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z')]"));
@@ -758,18 +757,19 @@ public class AdminHomePage extends BasePage{
             //click on more svg
             driver.findElement(By.xpath("(//button[@aria-label='More'])[1]")).click();
             logger.debug("Cliked on More svg menu opens");
-            waitFewSeconds(3000);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Renew invitation']")));
+            // waitFewSeconds(3000);
             driver.findElement(By.xpath("//*[text()='Renew invitation']")).click();
             waitFewSeconds(2000);
             logger.info("Cliked on renew invitation btn..");
             try{
                 logger.debug("Enter in try block");
-                waitFewSeconds(4000);
+                waitFewSeconds(3000);
                 //verify msg: Invitation Email was sent again.
                 WebElement ele = driver.findElement(By.xpath("//*[text()='Invitation Email was sent again.']"));
                 String ActualTitle = ele.getText();
                 String ExpectedTitle = "Invitation Email was sent again.";
-                waitFewSeconds(2000);
+                // waitFewSeconds(2000);
                 Assert.assertEquals(ExpectedTitle, ActualTitle);
                 logger.debug("Invitation App Message is successfully verified");
 
@@ -1057,5 +1057,18 @@ public class AdminHomePage extends BasePage{
 
 
     }
+
+    // public void surveybyadmin (Admin admin)
+    // {
+    //         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+    //         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//span[text()='Surveys'])"))).click();
+    //         logger.info("Clicked on survey");
+    //         uploadSurvey();
+    //         updateSurvey();
+    //         activateSurvey();
+    //         downloadJSON();
+    //         deleteSurvey();
+            
+    // }
 
 }
