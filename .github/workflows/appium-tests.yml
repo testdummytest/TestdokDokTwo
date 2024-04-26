@@ -26,8 +26,12 @@ jobs:
 
     - name: Install Appium
       run: npm install -g appium@latest
+      if: success()
 
-    - name: Start Appium Server and Run Tests
-      run: |
-        appium &
-        mvn -B clean test -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
+    - name: Start Appium Server
+      run: appium & sleep 5
+      if: success()
+
+    - name: Run Appium Tests
+      run: mvn -B clean test -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
+      if: success()
