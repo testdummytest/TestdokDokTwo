@@ -31,9 +31,9 @@ public class MobileHomePage extends MobileBasePage {
         dc.setCapability("platformName", "android");
         dc.setCapability("appPackage", "ch.health.docdok");
         dc.setCapability("appActivity", "ch.health.docdok.MainActivity");
-        dc.setCapability("automationName", "UiAutomator");
+        dc.setCapability("automationName", "UiAutomator2");
 
-        androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), dc);
+        androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), dc);
         waitFewSeconds(6000);
     }
 
