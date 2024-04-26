@@ -28,7 +28,7 @@ jobs:
       run: npm install -g appium@latest
       if: success()
 
-    - name: Start Appium Server
+    - name: Start Appium server
       run: appium & sleep 20
       if: success()
 
