@@ -27,14 +27,13 @@ public class MobileHomePage extends MobileBasePage {
 
         System.out.println("called beforemethod from homepage");
         DesiredCapabilities dc = new DesiredCapabilities();
-        dc.setCapability("headless", true);
         dc.setCapability("deviceName", "emulator-5554");
         dc.setCapability("platformName", "android");
         dc.setCapability("appPackage", "ch.health.docdok");
         dc.setCapability("appActivity", "ch.health.docdok.MainActivity");
         dc.setCapability("automationName", "UiAutomator2");
 
-        androidDriver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub"), dc);
+        androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), dc);
         waitFewSeconds(6000);
     }
 
