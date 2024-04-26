@@ -28,8 +28,6 @@ public class MobileHomePage extends MobileBasePage {
         System.out.println("called beforemethod from homepage");
         DesiredCapabilities dc = new DesiredCapabilities();
         dc.SetCapability("headless", true);
-        dc.SetCapability("platform", "LINUX");
-        dc.SetCapability("version", "latest");
         dc.setCapability("deviceName", "emulator-5554");
         dc.setCapability("platformName", "android");
         dc.setCapability("appPackage", "ch.health.docdok");
