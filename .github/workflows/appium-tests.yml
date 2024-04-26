@@ -26,4 +26,4 @@ jobs:
       run: appium
 
     - name: Run Appium Tests
-      run: mvn -B verify -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
+      run: mvn test -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
