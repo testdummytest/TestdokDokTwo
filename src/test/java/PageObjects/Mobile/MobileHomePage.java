@@ -34,7 +34,7 @@ public class MobileHomePage extends MobileBasePage {
         dc.setCapability("appActivity", "ch.health.docdok.MainActivity");
         dc.setCapability("automationName", "UiAutomator2");
 
-        androidDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), dc);
+        androidDriver = new AndroidDriver(new URL("https://127.0.0.1:4723/wd/hub"), dc);
         waitFewSeconds(6000);
     }
 
