@@ -24,7 +24,8 @@ public class MobileBaseTest {
         dc.setCapability("platformName", "Android");
         dc.setCapability("appPackage", "ch.health.docdok");
         dc.setCapability("appActivity", "ch.health.docdok.MainActivity");
-        // dc.setCapability("automationName", "UiAutomator2");
+        dc.setCapability("automationName", "UiAutomator2");
+        dc.setCapability("NEW_COMMAND_TIMEOUT", "2000");
         // dc.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "2000");
 
         androidDriver = new AndroidDriver(new URL("http://localhost:4723/"),dc);
