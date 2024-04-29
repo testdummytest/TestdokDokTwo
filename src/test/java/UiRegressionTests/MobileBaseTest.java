@@ -26,7 +26,7 @@ public class MobileBaseTest {
         dc.setCapability("appActivity", "ch.health.docdok.MainActivity");
         // dc.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "2000");
 
-        androidDriver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"),dc);
+        androidDriver = new AndroidDriver(new URL("http://localhost:4723/"),dc);
         Thread.sleep(4000);
     }
 
