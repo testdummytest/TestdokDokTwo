@@ -28,6 +28,9 @@ jobs:
       run: npm install -g appium@latest
       if: success()
 
+    - name: Print Appium Version
+      run: appium -v
+
     - name: Install ChromeDriver
       run: |
         LATEST_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
