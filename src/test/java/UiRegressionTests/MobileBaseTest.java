@@ -6,7 +6,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
+import org.openqa.selenium.Rotatable;
 import io.appium.java_client.android.AndroidDriver;
 // import io.appium.java_client.remote.MobileCapabilityType;
 
