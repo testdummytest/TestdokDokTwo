@@ -27,7 +27,10 @@ jobs:
     - name: Install Appium
       run: npm install -g appium@latest
       if: success()
-
+    - name: Install uiautomator2
+      run: appium driver install uiautomator2
+      if: success()
+      
     - name: Print Appium Version
       run: appium -v
 
