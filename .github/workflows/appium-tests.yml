@@ -22,13 +22,10 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Build Emulator
+    - name: Build emulator
       run: |
-        echo "no" | avdmanager --verbose create avd --force -n test_avd --abi "google_apis/x86_64" -k "system-images;android-29;google_apis;x86_64"
-
-    - name: Launch Emulator
-      run: emulator -avd test_avd -no-audio -no-window -gpu swiftshader_indirect & timeout 120 adb wait-for-device
-      
+          echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
+          
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
