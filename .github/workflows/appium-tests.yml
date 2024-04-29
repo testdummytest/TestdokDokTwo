@@ -20,6 +20,11 @@ jobs:
         distribution: 'temurin'
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+    - name: Launch emulator
+      run: |
+          chmod +x ./start_emu_headless.sh
+          EMULATOR_TIMEOUT=$EMULATOR_TIMEOUT EMULATOR_NAME=$EMULATOR_NAME ./start_emu_headless.sh
+    
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
