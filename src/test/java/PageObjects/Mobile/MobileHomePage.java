@@ -28,7 +28,7 @@ public class MobileHomePage extends MobileBasePage {
         System.out.println("called beforemethod from homepage");
         DesiredCapabilities dc = new DesiredCapabilities();
         dc.setCapability("deviceName", "emulator-5554");
-        dc.setCapability("platformName", "android");
+        dc.setCapability("platformName", "Android");
         dc.setCapability("appPackage", "ch.health.docdok");
         dc.setCapability("appActivity", "ch.health.docdok.MainActivity");
         dc.setCapability("automationName", "UiAutomator2");
