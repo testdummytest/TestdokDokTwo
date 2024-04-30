@@ -24,6 +24,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Set up Android SDK
+      uses: android/setup-android@v2
+
     - name: Update Android SDK Manager
       run: sdkmanager --update
     - name: List System Images by sdkmanager
