@@ -28,10 +28,6 @@ jobs:
         distribution: 'temurin'
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-    - name: Install Appium Doctor
-      run: npm install -g appium-doctor@latest
-    - name: Check Environment with Appium Doctor
-      run: appium-doctor
 
     - name: Build emulator
       run: |
