@@ -26,8 +26,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: List System Images by avdmanager
-      run: avdmanager list
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
     - name: Build emulator
