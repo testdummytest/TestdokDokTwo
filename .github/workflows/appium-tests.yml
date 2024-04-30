@@ -28,6 +28,11 @@ jobs:
         distribution: 'temurin'
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+    - name: Install Appium Doctor
+      run: npm install -g appium-doctor@latest
+    - name: Check Environment with Appium Doctor
+      run: appium-doctor
+
     - name: Build emulator
       run: |
         echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"          
