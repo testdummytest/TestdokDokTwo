@@ -24,12 +24,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-      with:
-        sdk-platforms: android-28
-        sdk-build-tools: 28.0.3
-    - name: List System Images
+    - name: Update Android SDK Manager
+      run: sdkmanager --update
+    - name: List System Images by sdkmanager
+      run: sdkmanager --list
+
+    - name: List System Images by avdmanager
       run: avdmanager list
     - name: Create Emulator
       run: |
