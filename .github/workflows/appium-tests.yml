@@ -11,9 +11,9 @@ jobs:
     env:
       ANDROID_ARCH: x86_64
       ANDROID_TARGET: google_apis_playstore
-      API_LEVEL: 33-ext5
+      API_LEVEL: 33
       ANDROID_BUILD_TOOLS_VERSION: 33.0.2
-      ANDROID_SDK_PACKAGES: "system-images;android-33-ext5;google_apis_playstore;x86_64 platforms;android-33-ext5 build-tools;33.0.2 platform-tools emulator"
+      ANDROID_SDK_PACKAGES: "system-images;android-33-ext5;google_apis_playstore;x86_64"
       EMULATOR_TIMEOUT: 350
       EMULATOR_NAME: nexus
       
@@ -34,7 +34,7 @@ jobs:
         sdkmanager --list
     - name: Build emulator
       run: |
-        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"          
+        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k $ANDROID_SDK_PACKAGES        
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
