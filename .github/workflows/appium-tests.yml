@@ -34,7 +34,7 @@ jobs:
         sdkmanager --list
     - name: Build emulator
       run: |
-        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k $ANDROID_SDK_PACKAGES        
+        echo "no" | avdmanager --verbose create avd --force --name $EMULATOR_NAME --package "system-images;android-33;google_apis_playstore;x86_64" --abi x86_64      
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
