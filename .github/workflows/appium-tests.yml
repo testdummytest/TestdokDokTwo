@@ -27,14 +27,13 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       with:
-        sdk-platforms: android-33
-        sdk-build-tools: 33.0.2
-        sdk-packages: system-images;android-33;google_apis_playstore;x86_64
+        sdk-platforms: android-28
+        sdk-build-tools: 28.0.3
     - name: List System Images
       run: avdmanager list
-    - name: Build emulator
+    - name: Create Emulator
       run: |
-        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"         
+        echo "no" | avdmanager --verbose create avd --force -n nexus --abi "google_apis_playstore/x86_64" -k "system-images;android-33;google_apis_playstore;x86_64" --device "1"    
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
