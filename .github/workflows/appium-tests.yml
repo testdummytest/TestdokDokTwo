@@ -15,7 +15,7 @@ jobs:
       ANDROID_BUILD_TOOLS_VERSION: 30.0.2
       ANDROID_SDK_PACKAGES: "system-images;android-${API_LEVEL};google_apis_playstore;${ANDROID_ARCH} platforms;android-${API_LEVEL} build-tools;${ANDROID_BUILD_TOOLS_VERSION} platform-tools emulator"
       EMULATOR_TIMEOUT: 350
-      EMULATOR_NAME: Test Emulator
+      EMULATOR_NAME: test_emulator
       
     steps:
     - name: Checkout Repository
@@ -35,9 +35,9 @@ jobs:
     - name: Install SDK Packages
       run: sdkmanager --install $ANDROID_SDK_PACKAGES
 
-    - name: Build emulator
+    - name: Create Emulator
       run: echo no | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi ${ANDROID_ARCH}/google_apis_playstore --package "system-images;android-${API_LEVEL};google_apis_playstore;${ANDROID_ARCH}"
-          
+      
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
