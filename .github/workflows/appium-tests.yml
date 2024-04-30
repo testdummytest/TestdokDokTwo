@@ -15,22 +15,27 @@ jobs:
       ANDROID_BUILD_TOOLS_VERSION: 33.0.2
       EMULATOR_TIMEOUT: 700
       EMULATOR_NAME: nexus
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+
+    - name: List System Images by avdmanager
+      run: avdmanager list
 
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: List System Images by avdmanager
-      run: avdmanager list
+
     - name: Set up Android SDK
       uses: android/setup-android@v2
+
     - name: Create Emulator
       run: |
-        echo "no" | avdmanager --verbose create avd --force -n nexus --abi "google_apis_playstore/x86_64" -k "system-images;android-33;google_apis_playstore;x86_64" --device "1"    
+        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}" --device "1"
+
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
