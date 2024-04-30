@@ -24,16 +24,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Set up Android SDK
-      uses: android/setup-android@v2
-
-    - name: Update Android SDK Manager
-      run: sdkmanager --update
-    - name: List System Images by sdkmanager
-      run: sdkmanager --list
-
     - name: List System Images by avdmanager
       run: avdmanager list
+    - name: Set up Android SDK
+      uses: android/setup-android@v2
     - name: Create Emulator
       run: |
         echo "no" | avdmanager --verbose create avd --force -n nexus --abi "google_apis_playstore/x86_64" -k "system-images;android-33;google_apis_playstore;x86_64" --device "1"    
