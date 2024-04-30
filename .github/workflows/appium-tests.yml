@@ -30,6 +30,8 @@ jobs:
         sdk-platforms: android-33
         sdk-build-tools: 33.0.2
         sdk-packages: system-images;android-33;google_apis_playstore;x86_64
+    - name: List System Images
+      run: avdmanager list
     - name: Build emulator
       run: |
         echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"         
