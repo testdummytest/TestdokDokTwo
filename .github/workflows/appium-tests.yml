@@ -8,14 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      ANDROID_ARCH: x86_64
-      ANDROID_TARGET: google_apis_playstore
-      API_LEVEL: 33
-      ANDROID_BUILD_TOOLS_VERSION: 33.0.2
-      ANDROID_SDK_PACKAGES: "system-images;android-33;google_apis_playstore;x86_64"
-      EMULATOR_TIMEOUT: 350
-      EMULATOR_NAME: nexus
+    
       
     steps:
     - name: Checkout Repository
@@ -34,7 +27,7 @@ jobs:
         sdkmanager --list
     - name: Build emulator
       run: |
-        echo "no" | avdmanager --verbose create avd --force --name $EMULATOR_NAME --package "system-images;android-33;google_apis_playstore;x86_64" --abi x86_64      
+        echo "no" | avdmanager create avd --force --name $EMULATOR_NAME --package "system-images;android-33;google_apis_playstore;x86_64" --abi x86_64      
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
