@@ -26,11 +26,18 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v2
+      with:
+        sdk-version: 'latest'
+
+    - name: Install SDK Packages
+      run: sdkmanager --install $ANDROID_SDK_PACKAGES
+
     - name: Build emulator
-      run: |
-        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"          
+      run: echo no | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi ${ANDROID_ARCH}/google_apis_playstore --package "system-images;android-${API_LEVEL};google_apis_playstore;${ANDROID_ARCH}"
+          
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
