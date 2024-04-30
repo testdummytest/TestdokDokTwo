@@ -14,7 +14,7 @@ jobs:
       API_LEVEL: 33-ext5
       ANDROID_BUILD_TOOLS_VERSION: 33.0.2
       EMULATOR_TIMEOUT: 350
-      EMULATOR_NAME: Google Play Intel
+      EMULATOR_NAME: nexus
       
     steps:
     - name: Checkout Repository
@@ -29,6 +29,7 @@ jobs:
       uses: android-actions/setup-android@v3
     - name: Check sdk list
       run: |
+        avdmanager list avd
         sdkmanager --list
     - name: Build emulator
       run: |
