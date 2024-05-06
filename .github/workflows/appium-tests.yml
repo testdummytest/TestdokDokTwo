@@ -24,9 +24,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: List ADB Devices
+      run: adb devices
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
-    - name: ADB Devices
+    - name: Available SDK packages in Android SDK
       run: sdkmanager --list --verbose
     - name: Print Package Path
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
