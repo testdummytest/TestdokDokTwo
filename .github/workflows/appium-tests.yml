@@ -42,7 +42,7 @@ jobs:
 
     - name: Build emulator
       run: |
-        avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-33-ext5;google_apis_playstore;arm64-v8a"
+        echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-33-ext5;google_apis_playstore;arm64-v8a" -p "platforms;android-33"
 
     - name: Install Node.js
       uses: actions/setup-node@v3
