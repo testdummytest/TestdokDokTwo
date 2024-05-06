@@ -40,6 +40,9 @@ jobs:
     - name: Print Package Path
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
 
+    - name: Install SDK System Image
+      run: sdkmanager --install "system-images;android-33-ext5;google_apis_playstore;arm64-v8a"
+
     - name: Build emulator
       run: |
         echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-33-ext5;google_apis_playstore;arm64-v8a" -p "platforms;android-33"
