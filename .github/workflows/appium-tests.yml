@@ -11,7 +11,7 @@ jobs:
     env:
       ANDROID_ARCH: x86_64
       ANDROID_TARGET: google_apis_playstore
-      API_LEVEL: 33
+      API_LEVEL: 33-ext4
       EMULATOR_TIMEOUT: 350
       EMULATOR_NAME: nexus
       JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.10-7/x64
