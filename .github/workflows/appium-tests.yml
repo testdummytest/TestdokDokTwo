@@ -35,7 +35,7 @@ jobs:
       run: adb devices
 
     - name: Available SDK packages in Android SDK
-      run: sdkmanager --list --verbose
+      run: sdkmanager --list | grep system-images
 
     - name: Print Package Path
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
