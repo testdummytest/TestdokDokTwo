@@ -20,8 +20,6 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-    - name: ADB Devices
-      run: sdkmanager --list --verbose
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
@@ -29,6 +27,8 @@ jobs:
         distribution: 'temurin'
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+    - name: ADB Devices
+      run: sdkmanager --list --verbose
     - name: Print Package Path
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
     - name: Build emulator
