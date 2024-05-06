@@ -20,7 +20,8 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-
+    - name: ADB Devices
+      run: sdkmanager --list --verbose
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
