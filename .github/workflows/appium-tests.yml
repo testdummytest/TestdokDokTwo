@@ -57,7 +57,7 @@ jobs:
       run: |
         expect -c "
           set system_images 'android-33;google_apis;x86_64'
-          spawn avdmanager --verbose create avd --force -n \$env(EMULATOR_NAME) --abi 'google_apis_playstore/x86_64' -k \"\$system_images\"
+          spawn avdmanager --verbose create avd --force -n \$env(EMULATOR_NAME) --abi 'google_apis/x86_64' -k \"\$system_images\"
           expect {
             \"Do you wish to create a custom hardware profile? [no]\" { send \"yes\r\"; exp_continue }
             \"PlayStore.enabled [no]:\" { send \"yes\r\" }
