@@ -63,7 +63,7 @@ jobs:
         "
       env:
         EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
-        SYSTEM_IMAGES: "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
+        SYSTEM_IMAGES: system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}
 
     - name: List ADB Devices
       run: adb devices
