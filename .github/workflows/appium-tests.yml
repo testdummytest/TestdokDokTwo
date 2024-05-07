@@ -64,7 +64,7 @@ jobs:
         "
         env:
           EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
-          SYSTEM_IMAGES: ${{ env.SYSTEM_IMAGES }}  # Reference the defined environment variable
+          SYSTEM_IMAGES: ${{ env.SYSTEM_IMAGES }}
 
     - name: List ADB Devices
       run: adb devices
