@@ -40,10 +40,17 @@ jobs:
     - name: Install SDK System Image
       run: sdkmanager --install "system-images;android-33;google_apis_playstore;x86_64"
 
+    - name: Install expect
+      run: sudo apt-get install expect -y
+    
     - name: Build emulator
       run: |
-        echo -e "yes\nyes\n" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "google_apis_playstore/x86_64" -k "system-images;android-33;google_apis_playstore;x86_64"
-
+        expect -c '
+          spawn avdmanager --verbose create avd --force -n $EMULATOR_NAME --abi "google_apis_playstore/x86_64" -k "system-images;android-33;google_apis_playstore;x86_64"
+          expect "Do you wish to create a custom hardware profile? [no]" { send "yes\r" }
+          expect "PlayStore.enabled [no]:" { send "yes\r" }
+          interact
+        '
     - name: List ADB Devices
       run: adb devices
 
