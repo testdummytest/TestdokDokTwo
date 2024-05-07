@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ANDROID_ARCH: x86_64
-      ANDROID_TARGET: google_apis
+      ANDROID_TARGET: google_apis_playstore
       API_LEVEL: 33
       EMULATOR_TIMEOUT: 500
       EMULATOR_NAME: nexus
@@ -56,8 +56,8 @@ jobs:
     - name: Build emulator
       run: |
         expect -c "
-          set system_images 'android-33;google_apis;x86_64'
-          spawn avdmanager --verbose create avd --force -n \$env(EMULATOR_NAME) --abi 'google_apis/x86_64' -k \"\$system_images\"
+          set system_images 'android-33;google_apis_playstore;x86_64'
+          spawn avdmanager --verbose create avd --force -n \$env(EMULATOR_NAME) --abi 'google_apis_playstore/x86_64' -k \"\$system_images\"
           expect {
             \"Do you wish to create a custom hardware profile? [no]\" { send \"yes\r\"; exp_continue }
             \"PlayStore.enabled [no]:\" { send \"yes\r\" }
