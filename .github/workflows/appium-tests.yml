@@ -44,7 +44,7 @@ jobs:
       run: sudo apt-get install expect -y
 
     - name: Print System Images Path
-      run: echo "system-images;android-${API_LEVEL}-${ANDROID_TARGET};${ANDROID_ARCH}"
+      run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
       env:
         API_LEVEL: ${{ env.API_LEVEL }}
         ANDROID_TARGET: ${{ env.ANDROID_TARGET }}
@@ -63,7 +63,7 @@ jobs:
         "
       env:
         EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
-        SYSTEM_IMAGES: "system-images;android-${API_LEVEL}-${ANDROID_TARGET};${ANDROID_ARCH}"
+        SYSTEM_IMAGES: "system-images;android-${API_LEVEL};google_apis;x86_64"
 
     - name: List ADB Devices
       run: adb devices
