@@ -47,12 +47,10 @@ jobs:
       run: |
         expect -c '
           spawn avdmanager --verbose create avd --force -n "$env(EMULATOR_NAME)" --abi "google_apis_playstore/x86_64" -k "system-images;android-33;google_apis_playstore;x86_64"
-          expect {
-            "Do you wish to create a custom hardware profile? \[no\]" { send "yes\r"; exp_continue }
-            "PlayStore.enabled \[no\]:" { send "yes\r" }
-          }
+          expect "Do you wish to create a custom hardware profile? [no]" { send "yes\r" }
+          expect "PlayStore.enabled [no]:" { send "yes\r" }
           interact
-        ' -v EMULATOR_NAME="$EMULATOR_NAME"
+        '
 
     - name: List ADB Devices
       run: adb devices
