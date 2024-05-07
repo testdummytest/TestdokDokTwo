@@ -42,7 +42,7 @@ jobs:
 
     - name: Install expect
       run: sudo apt-get install expect -y
-
+    
     - name: Print System Images Path
       run: echo "system-images;android-${API_LEVEL};google_apis;x86_64"
       env:
@@ -58,7 +58,7 @@ jobs:
             \"PlayStore.enabled [no]:\" { send \"yes\r\" }
           }
           interact
-        " $env(EMULATOR_NAME)
+        " ${{ env.EMULATOR_NAME }}
       env:
         EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
         SYSTEM_IMAGES: "system-images;android-${API_LEVEL};google_apis;x86_64"
