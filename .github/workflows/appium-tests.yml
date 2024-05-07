@@ -49,22 +49,21 @@ jobs:
         API_LEVEL: ${{ env.API_LEVEL }}
         ANDROID_TARGET: ${{ env.ANDROID_TARGET }}
         ANDROID_ARCH: ${{ env.ANDROID_ARCH }}
-    
+
     - name: Build emulator
       run: |
         expect -c "
           set system_images \"${{ env.SYSTEM_IMAGES }}\"
           spawn avdmanager --verbose create avd --force -n \$env(EMULATOR_NAME) --abi 'google_apis_playstore/x86_64' -k \$system_images
           expect {
-            \"Do you wish to create a custom hardware profile? [no]\" { send \"yes\r\"; exp_continue }
-            \"PlayStore.enabled [no]:\" { send \"yes\r\" }
+            \"Do you wish to create a custom hardware profile? \[no\]\" { send \"yes\r\"; exp_continue }
+            \"PlayStore.enabled \[no\]:\" { send \"yes\r\" }
           }
           interact
         "
       env:
         EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
         SYSTEM_IMAGES: "system-images;android-${API_LEVEL}-${ANDROID_TARGET};${ANDROID_ARCH}"
-
 
     - name: List ADB Devices
       run: adb devices
