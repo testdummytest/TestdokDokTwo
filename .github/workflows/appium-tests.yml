@@ -42,7 +42,14 @@ jobs:
 
     - name: Install expect
       run: sudo apt-get install expect -y
-    
+
+    - name: Print System Images Path
+      run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
+      env:
+        API_LEVEL: ${{ env.API_LEVEL }}
+        ANDROID_TARGET: ${{ env.ANDROID_TARGET }}
+        ANDROID_ARCH: ${{ env.ANDROID_ARCH }}
+
     - name: Build emulator
       run: |
         expect -c "
