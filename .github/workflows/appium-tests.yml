@@ -38,12 +38,13 @@ jobs:
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
 
     - name: Install SDK System Image
-      run: sdkmanager --install "system-images;android-33;google_apis;x86_64"
+      # Corrected format for system-images definition
+      run: sdkmanager --install "system-images;android-${API_LEVEL};google_apis;x86_64"
 
     - name: Install expect
       run: sudo apt-get install expect -y
-        
-    - name: Print System Images Path
+
+    - name: Print System Images Path  
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
       env:
         API_LEVEL: ${{ env.API_LEVEL }}
@@ -51,7 +52,7 @@ jobs:
         ANDROID_ARCH: ${{ env.ANDROID_ARCH }}
 
     - name: Build emulator
-      run: |
+      run: |  # Updated build emulator step with corrected system_images usage
         expect -c "
           set system_images '${{ env.SYSTEM_IMAGES }}'
           spawn avdmanager --verbose create avd --force -n \$env(EMULATOR_NAME) --abi 'google_apis_playstore/x86_64' -k \"\$system_images\"
@@ -61,9 +62,9 @@ jobs:
           }
           interact
         "
-      env:
-        EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
-        SYSTEM_IMAGES: "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
+        env:
+          EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
+          SYSTEM_IMAGES: ${{ env.SYSTEM_IMAGES }}  # Reference the defined environment variable
 
     - name: List ADB Devices
       run: adb devices
