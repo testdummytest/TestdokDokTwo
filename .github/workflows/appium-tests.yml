@@ -39,9 +39,6 @@ jobs:
 
     - name: Install SDK System Image
       run: sdkmanager --install "system-images;android-30;google_apis;x86_64"
-
-    - name: Install expect
-      run: sudo apt-get install expect -y
         
     - name: Print System Images Path
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
@@ -52,10 +49,6 @@ jobs:
 
     - name: create AVD 
       run: |
-        $ANDROID_HOME/emulator/emulator -list-avds
-        echo '---'
-        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_android_emulator -k 'system-images;android-30;google_apis;x86_64' --force
-        echo '---'
         $ANDROID_HOME/emulator/emulator -list-avds
 
     - name: List ADB Devices
