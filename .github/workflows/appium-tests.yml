@@ -38,7 +38,7 @@ jobs:
       run: echo "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
 
     - name: Install SDK System Image
-      run: sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
+      run: sdkmanager --install "system-images;android-30;google_apis;x86"
 
     - name: Install expect
       run: sudo apt-get install expect -y
@@ -50,20 +50,13 @@ jobs:
         ANDROID_TARGET: ${{ env.ANDROID_TARGET }}
         ANDROID_ARCH: ${{ env.ANDROID_ARCH }}
 
-    - name: Build emulator
+    - name: create AVD 
       run: |
-        expect -c "
-          set system_images \'system-images;android-${{ env.API_LEVEL }};google_apis_playstore;x86_64\'
-          spawn avdmanager --verbose create avd --force -n $env(EMULATOR_NAME) --abi 'google_apis_playstore/x86_64' -k \"\$system_images\"
-          expect {
-            \"Do you wish to create a custom hardware profile? [no]\" { send \"yes\r\"; exp_continue }
-            \"PlayStore.enabled [no]:\" { send \"yes\r\" }
-          }
-          interact
-        "
-      env:
-        API_LEVEL: ${{ env.API_LEVEL }}
-        EMULATOR_NAME: ${{ env.EMULATOR_NAME }}
+        $ANDROID_HOME/emulator/emulator -list-avds
+        echo '---'
+        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_android_emulator -k 'system-images;android-30;google_apis;x86_64' --force
+        echo '---'
+        $ANDROID_HOME/emulator/emulator -list-avds
 
     - name: List ADB Devices
       run: adb devices
