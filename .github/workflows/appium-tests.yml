@@ -51,16 +51,12 @@ jobs:
     - name: Check Android SDK directory
       run: ls -l $ANDROID_HOME
 
-    - name: Start Android Emulator
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        target: default
-        arch: x86_64
-        profile: Nexus 5
-        heap-size: 2048
-        emulator-options: -accel auto -no-snapshot -no-window
-        script: echo "helloooo"
+    - name: create AVD 
+      run: |
+        $ANDROID_HOME/emulator/emulator -list-avds
+        echo '---'
+        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_android_emulator -k 'system-images;android-30;google_apis;x86_64' --force
+        echo '---'
 
     - name: List ADB Devices
       run: adb devices
