@@ -38,6 +38,7 @@ jobs:
         profile: Nexus 5
         heap-size: 2048
         emulator-options: -accel auto -no-snapshot -no-window
+        script: echo "Generated AVD snapshot for caching."
         
     # - name: Setup Android SDK
     #   uses: android-actions/setup-android@v3
