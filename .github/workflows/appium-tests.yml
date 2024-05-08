@@ -50,6 +50,9 @@ jobs:
     - name: create AVD 
       run: |
         $ANDROID_HOME/emulator/emulator -list-avds
+        echo '---'
+        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_android_emulator -k 'system-images;android-27;google_apis;x86' --force
+        echo '---'
 
     - name: List ADB Devices
       run: adb devices
