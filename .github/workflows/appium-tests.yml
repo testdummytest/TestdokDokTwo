@@ -47,6 +47,9 @@ jobs:
         ANDROID_TARGET: ${{ env.ANDROID_TARGET }}
         ANDROID_ARCH: ${{ env.ANDROID_ARCH }}
 
+    - name: Check Android SDK directory
+      run: ls -l $ANDROID_HOME
+
     - name: create AVD 
       run: |
         $ANDROID_HOME/emulator/emulator -list-avds
