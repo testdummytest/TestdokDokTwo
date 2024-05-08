@@ -26,7 +26,9 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        distribution: 'temurin'
+        java-version: '17'
+        
     - name: Start Android Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
