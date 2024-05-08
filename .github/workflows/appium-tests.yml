@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Start Android Emulator
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     # env:
     #   ANDROID_ARCH: x86
     #   ANDROID_TARGET: default
