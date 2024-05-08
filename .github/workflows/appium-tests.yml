@@ -55,8 +55,9 @@ jobs:
       run: |
         $ANDROID_HOME/emulator/emulator -list-avds
         echo '---'
-        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_android_emulator -k 'system-images;android-30;google_apis;x86_64' --force
+        echo "no" | $ANDROID_HOME/tools/bin/avdmanager avdmanager create avd --force -n test --abi 'default/x86_64' --package 'system-images;android-30;default;x86_64' --device 'Nexus 5'
         echo '---'
+        
 
     - name: List ADB Devices
       run: adb devices
