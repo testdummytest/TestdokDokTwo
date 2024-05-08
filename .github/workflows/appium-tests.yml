@@ -53,11 +53,12 @@ jobs:
 
     - name: create AVD 
       run: |
+        # echo "yes" | $ANDROID_HOME/emulator/emulator -list-avds
+        echo '---'
+        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
+        echo '---'
         echo "yes" | $ANDROID_HOME/emulator/emulator -list-avds
-        echo '---'
-        echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force -n test --abi 'default/x86_64' --package 'system-images;android-30;default;x86_64' --device 'Nexus 5'
-        echo '---'
-        
+        echo "yes" | $ANDROID_HOME/emulator/emulator -avd test1
 
     - name: List ADB Devices
       run: adb devices
