@@ -27,6 +27,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    
+    - name: Install Dependencies
+      run: mvn install --quiet
+
+    - name: Build and Test with Maven
+      run: mvn clean verify --quiet
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
