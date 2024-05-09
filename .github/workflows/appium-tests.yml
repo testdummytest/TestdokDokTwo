@@ -19,6 +19,9 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+        
+    - name: Add JAXB Dependency
+      run: export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
@@ -31,9 +34,6 @@ jobs:
       
     - name: Check Android SDK directory
       run: ls -l $ANDROID_HOME
-
-    - name: Add JAXB Dependency
-      run: export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
 
     - name: create AVD 
       run:  |
