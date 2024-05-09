@@ -41,7 +41,7 @@ jobs:
 
     - name: create AVD 
       run:  |
-        JAXB_JARS=$(echo /usr/share/java/jaxb-*.jar | tr ' ' ':')
+        JAXB_JARS=$(find $JAXB_HOME -name '*.jar' -printf '%p:')
         $ANDROID_HOME/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86"
         
     - name: List AVD Devices
