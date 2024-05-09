@@ -20,14 +20,6 @@ jobs:
         java-version: '21'
         distribution: 'adopt'
 
-    - name: Install Android SDK
-      run: |
-        wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip
-        mkdir -p $ANDROID_HOME/cmdline-tools
-        unzip -qq commandlinetools-linux-7302050_latest.zip -d $ANDROID_HOME/cmdline-tools
-        echo 'y' | $ANDROID_HOME/cmdline-tools/tools/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "emulator"
-        echo 'y' | $ANDROID_HOME/cmdline-tools/tools/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
-
     - name: Install JAXB
       run: |
         sudo apt-get update
@@ -38,6 +30,9 @@ jobs:
 
     - name: Set JAXB_CLASSPATH Environment Variable
       run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
 
     - name: Available SDK packages in Android SDK
       run: sdkmanager --list | grep system-images
