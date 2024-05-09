@@ -9,7 +9,9 @@ jobs:
   build:
     name: Start Android Emulator
     runs-on: ubuntu-latest
-
+    env:
+      JAVA_OPTS: '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+      
     steps:        
     - name: Checkout code
       uses: actions/checkout@v2
@@ -21,7 +23,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Set JAVA_OPTS environment variable
-      run: export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+      run: echo "JAVA_OPTS=${{ env.JAVA_OPTS }}" >> $GITHUB_ENV
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
