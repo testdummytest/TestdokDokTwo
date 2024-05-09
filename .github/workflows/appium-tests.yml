@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install JAXB
+      run: |
+        mkdir -p $HOME/jaxb
+        wget -q -O $HOME/jaxb/jaxb-ri.zip https://jaxb.java.net/2.3.2/jaxb-ri-2.3.2.zip
+        unzip -q $HOME/jaxb/jaxb-ri.zip -d $HOME/jaxb
+    - name: Set JAXB Classpath
+      run: echo "::add-path::${HOME}/jaxb/jaxb-ri-2.3.2/lib"
+        
     - name: Checkout code
       uses: actions/checkout@v2
 
