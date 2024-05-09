@@ -20,17 +20,6 @@ jobs:
         java-version: '21'
         distribution: 'adopt'
 
-    - name: Install JAXB
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libjaxb-java
-        
-    - name: Set JAXB_HOME Environment Variable
-      run: echo "export JAXB_HOME=/usr/share/java" >> $GITHUB_ENV
-
-    - name: Set JAXB_CLASSPATH Environment Variable
-      run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
-
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
@@ -43,9 +32,12 @@ jobs:
     - name: Check Android SDK directory
       run: ls -l $ANDROID_HOME
 
+    - name: Add JAXB Dependency
+      run: |
+          echo "dependencies { compile 'javax.xml.bind:jaxb-api:2.3.1' }" >> build.gradle
+
     - name: create AVD 
       run:  |
-          export CLASSPATH=$JAXB_CLASSPATH
           $ANDROID_HOME/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
 
     - name: List AVD Devices
