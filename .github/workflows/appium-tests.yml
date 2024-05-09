@@ -24,9 +24,13 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libjaxb-java
+        
     - name: Set JAXB_HOME Environment Variable
       run: echo "export JAXB_HOME=/usr/share/java" >> $GITHUB_ENV
-      
+
+    - name: Set JAXB_CLASSPATH Environment Variable
+      run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
+          
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
@@ -41,9 +45,8 @@ jobs:
 
     - name: create AVD 
       run:  |
-        JAXB_JARS=$(find $JAXB_HOME -name '*.jar' -printf '%p:')
-        $ANDROID_HOME/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86"
-        
+          $ANDROID_HOME/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64" --classpath $JAXB_CLASSPATH
+
     - name: List AVD Devices
       run: $ANDROID_HOME/emulator/emulator -list-avds
 
