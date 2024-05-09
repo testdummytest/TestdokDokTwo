@@ -9,8 +9,6 @@ jobs:
   build:
     name: Start Android Emulator
     runs-on: ubuntu-latest
-    env:
-      JAVA_OPTS: '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
       
     steps:        
     - name: Checkout code
@@ -21,9 +19,6 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
-
-    - name: Set JAVA_OPTS environment variable
-      run: echo "JAVA_OPTS=${{ env.JAVA_OPTS }}" >> $GITHUB_ENV
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
@@ -38,8 +33,7 @@ jobs:
       run: ls -l $ANDROID_HOME
 
     - name: Add JAXB Dependency
-      run: |
-          echo "dependencies { compile 'javax.xml.bind:jaxb-api:2.3.1' }" >> build.gradle
+      run: export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
 
     - name: create AVD 
       run:  |
