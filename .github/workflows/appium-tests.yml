@@ -9,8 +9,6 @@ jobs:
   build:
     name: Start Android Emulator
     runs-on: ubuntu-latest
-    env:
-      JAVA_OPTS: '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
 
     steps:        
     - name: Checkout code
