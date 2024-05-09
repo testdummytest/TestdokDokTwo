@@ -20,6 +20,12 @@ jobs:
         java-version: '21'
         distribution: 'adopt'
 
+    - name: Install Android SDK
+      uses: android/setup-android@v2
+      with:
+        components: 'platform-tools, emulator'
+        licenses: 'android-sdk-preview-license-.+'
+
     - name: Install JAXB
       run: |
         sudo apt-get update
