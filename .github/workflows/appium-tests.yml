@@ -21,10 +21,12 @@ jobs:
         distribution: 'adopt'
 
     - name: Install Android SDK
-      uses: android/setup-android@v2
-      with:
-        components: 'platform-tools, emulator'
-        licenses: 'android-sdk-preview-license-.+'
+      run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip
+        mkdir -p $ANDROID_HOME/cmdline-tools
+        unzip -qq commandlinetools-linux-7302050_latest.zip -d $ANDROID_HOME/cmdline-tools
+        echo 'y' | $ANDROID_HOME/cmdline-tools/tools/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "emulator"
+        echo 'y' | $ANDROID_HOME/cmdline-tools/tools/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
 
     - name: Install JAXB
       run: |
