@@ -20,6 +20,9 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
+    - name: Set JAVA_OPTS environment variable
+      run: export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
