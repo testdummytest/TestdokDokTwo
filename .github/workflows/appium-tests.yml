@@ -19,9 +19,17 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+
+    - name: Install JAXB
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libjaxb-java
         
-    - name: Add JAXB Dependency
-      run: export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+    - name: Set JAXB_HOME Environment Variable
+      run: echo "export JAXB_HOME=/usr/share/java" >> $GITHUB_ENV
+    
+    - name: Set JAXB_CLASSPATH Environment Variable
+      run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
