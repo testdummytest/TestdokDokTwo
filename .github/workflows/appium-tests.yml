@@ -30,12 +30,13 @@ jobs:
 
     - name: Setup Android SDK
       run: |
-          wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
-          tar -xvf android-sdk_r24.2-linux.tgz
-          cd android-sdk-linux/tools
+        wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+        tar -xvf android-sdk_r24.2-linux.tgz
+        cd android-sdk-linux/tools
     
     - name: List Available Packages in SDK
-      run: ./sdkmanager --list
+      run: |
+        ./sdkmanager --list
     
     - name: Install Android SDK Packages
       run: |
