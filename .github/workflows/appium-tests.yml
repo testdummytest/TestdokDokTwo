@@ -36,7 +36,7 @@ jobs:
     
     - name: Install Android SDK Packages
       run: |
-        cd $HOME/Android/Sdk/tools
+        cd $HOME/Android/cmdline-tools/tools/bin
         ./android update sdk --no-ui --all --filter "platform-tools,build-tools-23.0.2,android-23"
 
     - name: Set PATH in ~/.bashrc
