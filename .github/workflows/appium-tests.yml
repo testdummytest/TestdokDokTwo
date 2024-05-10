@@ -45,9 +45,9 @@ jobs:
         cd ..
         rm -rf sdkmanager_temp
 
-    - name: List Available Packages in SDK
+    - name: List Available Packages
       run: |
-        /path/to/android-sdk-linux/tools/sdkmanager --list
+        $HOME/Android/Sdk/cmdline-tools/tools/bin/sdkmanager --list
     
     - name: Install Android SDK Packages
       run: |
