@@ -36,15 +36,15 @@ jobs:
     
     - name: Install SDK Command-line Tools
       run: |
+        mkdir -p $HOME/Android/Sdk/cmdline-tools
         mkdir sdkmanager_temp
         cd sdkmanager_temp
         wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
         unzip commandlinetools-linux-7583922_latest.zip
-        mv cmdline-tools $HOME/Android/Sdk/cmdline-tools
+        mv cmdline-tools/* $HOME/Android/Sdk/cmdline-tools/
         cd ..
         rm -rf sdkmanager_temp
 
-    
     - name: List Available Packages in SDK
       run: |
         /path/to/android-sdk-linux/tools/sdkmanager --list
