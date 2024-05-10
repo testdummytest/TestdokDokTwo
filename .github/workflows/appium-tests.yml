@@ -31,11 +31,11 @@ jobs:
     - name: Set JAXB_CLASSPATH Environment Variable
       run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+    # - name: Setup Android SDK
+    #   uses: android-actions/setup-android@v3
 
-    - name: Available SDK packages in Android SDK
-      run: sdkmanager --list | grep system-images
+    # - name: Available SDK packages in Android SDK
+    #   run: sdkmanager --list | grep system-images
 
     - name: Install SDK System Image
       run: sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
