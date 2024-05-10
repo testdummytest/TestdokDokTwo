@@ -36,7 +36,7 @@ jobs:
     
     - name: List Available Packages in SDK
       run: |
-        ./sdkmanager --list
+        /path/to/android-sdk-linux/tools/sdkmanager --list
     
     - name: Install Android SDK Packages
       run: |
