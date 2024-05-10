@@ -15,59 +15,76 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '21'
+      run: sudo apt-get install openjdk-7-jdk
         
-    - name: Install JAXB
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libjaxb-java
+    # - name: Install JAXB
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install -y libjaxb-java
         
-    - name: Set JAXB_HOME Environment Variable
-      run: echo "export JAXB_HOME=/usr/share/java" >> $GITHUB_ENV
+    # - name: Set JAXB_HOME Environment Variable
+    #   run: echo "export JAXB_HOME=/usr/share/java" >> $GITHUB_ENV
     
-    - name: Set JAXB_CLASSPATH Environment Variable
-      run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
+    # - name: Set JAXB_CLASSPATH Environment Variable
+    #   run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
 
     - name: Setup Android SDK
-      run: sudo apt update && sudo apt install android-sdk
+      run: |
+          wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+          tar -xvf android-sdk_r24.2-linux.tgz
+          cd android-sdk-linux/tools
+    
+    - name: Install Android SDK Packages
+      run: ./android update sdk --no-ui --all --filter "platform-tools,build-tools-23.0.2,android-23"
 
+    - name: Set PATH in ~/.bashrc
+      run: echo 'export PATH=${PATH}:$HOME/Android/Sdk/platform-tools:$HOME/Android/Sdk/tools:$HOME/Android/Sdk/build-tools/23.0.2/' >> ~/.bashrc
 
+    - name: Install Desired Android Platforms
+      run: $HOME/Android/Sdk/tools/android sdk
+    
+    - name: Install Android Images
+      run: $HOME/Android/Sdk/tools/android avd
+    
+    - name: Add Android Platform to Ionic
+      run: ionic platform add android
+    
+    - name: Run Emulator
+      run: ionic emulate android
+        
     # - name: Available SDK packages in Android SDK
     #   run: sdkmanager --list | grep system-images
-    - name: Check Android SDK directory
-      run: ls -l $ANDROID_HOME
+    # - name: Check Android SDK directory
+    #   run: ls -l $ANDROID_HOME
       
-    - name: Install SDK System Image
-      run: /usr/local/lib/android/cmdline-tools/tools/bin/sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
+    # - name: Install SDK System Image
+    #   run: /usr/local/lib/android/cmdline-tools/tools/bin/sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
       
-    - name: Check Android SDK directory
-      run: ls -l $ANDROID_HOME
-    - name: Check Android SDK directory 2
-      run: ls -l $ANDROID_HOME/cmdline-tools
-    - name: Check Android SDK directory 3
-      run: ls -l $ANDROID_HOME/cmdline-tools/tools
-    - name: Check Android SDK directory 4
-      run: ls -l $ANDROID_HOME/cmdline-tools/tools/bin
+    # - name: Check Android SDK directory
+    #   run: ls -l $ANDROID_HOME
+    # - name: Check Android SDK directory 2
+    #   run: ls -l $ANDROID_HOME/cmdline-tools
+    # - name: Check Android SDK directory 3
+    #   run: ls -l $ANDROID_HOME/cmdline-tools/tools
+    # - name: Check Android SDK directory 4
+    #   run: ls -l $ANDROID_HOME/cmdline-tools/tools/bin
 
-    - name: create AVD 
-      run: $ANDROID_HOME/cmdline-tools/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
+    # - name: create AVD 
+    #   run: $ANDROID_HOME/cmdline-tools/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
 
-    - name: List AVD Devices
-      run: $ANDROID_HOME/emulator/emulator -list-avds
+    # - name: List AVD Devices
+    #   run: $ANDROID_HOME/emulator/emulator -list-avds
 
-    - name: Run AVD Devices
-      run: |
-        $ANDROID_HOME/emulator/emulator -avd test1 &
-        sleep 60  # Adjust sleep time as needed, wait for emulator to fully start
+    # - name: Run AVD Devices
+    #   run: |
+    #     $ANDROID_HOME/emulator/emulator -avd test1 &
+    #     sleep 60  # Adjust sleep time as needed, wait for emulator to fully start
 
-    - name: List ADB Devices
-      run: adb devices
+    # - name: List ADB Devices
+    #   run: adb devices
         
-    - name: Install Dependencies
-      run: mvn install --quiet
+    # - name: Install Dependencies
+    #   run: mvn install --quiet
 
     - name: Install Node.js
       uses: actions/setup-node@v3
