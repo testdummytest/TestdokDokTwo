@@ -43,6 +43,12 @@ jobs:
       
     - name: Check Android SDK directory
       run: ls -l $ANDROID_HOME
+    - name: Check Android SDK directory 2
+      run: ls -l $ANDROID_HOME/cmdline-tools
+    - name: Check Android SDK directory 3
+      run: ls -l $ANDROID_HOME/cmdline-tools/tools
+    - name: Check Android SDK directory 4
+      run: ls -l $ANDROID_HOME/cmdline-tools/tools/bin
 
     - name: create AVD 
       run: $ANDROID_HOME/cmdline-tools/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
