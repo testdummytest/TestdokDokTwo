@@ -47,7 +47,7 @@ jobs:
 
     - name: List Available Packages
       run: |
-        $HOME/Android/Sdk/cmdline-tools/tools/bin/sdkmanager --list
+        $HOME/Android/Sdk/cmdline-tools --list
     
     - name: Install Android SDK Packages
       run: |
