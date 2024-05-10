@@ -19,8 +19,6 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '21'
-        cache: 'maven'
-        cache-dependency-path: 'sub-project/pom.xml' # optional
         
     - name: Install JAXB
       run: |
