@@ -45,7 +45,7 @@ jobs:
       run: ls -l $ANDROID_HOME
 
     - name: create AVD 
-      run: $ANDROID_HOME/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
+      run: $ANDROID_HOME/cmdline-tools/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
 
     - name: List AVD Devices
       run: $ANDROID_HOME/emulator/emulator -list-avds
