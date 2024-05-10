@@ -34,6 +34,9 @@ jobs:
           tar -xvf android-sdk_r24.2-linux.tgz
           cd android-sdk-linux/tools
     
+    - name: List Available Packages in SDK
+      run: ./sdkmanager --list
+    
     - name: Install Android SDK Packages
       run: |
         cd $HOME/Android/cmdline-tools/tools/bin
