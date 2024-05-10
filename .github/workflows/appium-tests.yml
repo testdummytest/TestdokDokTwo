@@ -37,9 +37,11 @@ jobs:
 
     # - name: Available SDK packages in Android SDK
     #   run: sdkmanager --list | grep system-images
-
+    - name: Check Android SDK directory
+      run: ls -l $ANDROID_HOME
+      
     - name: Install SDK System Image
-      run: /usr/local/lib/android/tools/bin/sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
+      run: /usr/local/lib/android/cmdline-tools/tools/bin/sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
       
     - name: Check Android SDK directory
       run: ls -l $ANDROID_HOME
