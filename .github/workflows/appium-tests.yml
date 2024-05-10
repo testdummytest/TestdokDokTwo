@@ -32,7 +32,7 @@ jobs:
       run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
 
     - name: Setup Android SDK
-      uses: amyu/setup-android@v4
+      run: sudo apt update && sudo apt install android-sdk
 
 
     # - name: Available SDK packages in Android SDK
