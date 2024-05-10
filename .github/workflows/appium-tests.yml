@@ -61,9 +61,6 @@ jobs:
     - name: Install Dependencies
       run: mvn install --quiet
 
-    - name: Build and Test with Maven
-      run: mvn clean verify --quiet
-
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
