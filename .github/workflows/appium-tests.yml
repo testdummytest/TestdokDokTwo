@@ -57,10 +57,13 @@ jobs:
     - name: Set PATH in ~/.bashrc
       run: echo 'export PATH=$PATH:$HOME/Android/Sdk/platform-tools:$HOME/Android/Sdk/tools:$HOME/Android/Sdk/build-tools/23.0.2/' >> ~/.bashrc
     
+    - name: Refresh PATH variable
+      run: source ~/.bashrc
+    
     - name: Install Desired Android Platforms
       run: |
-        source ~/.bashrc  # Refresh the PATH variable
         sdkmanager "platforms;android-23" "build-tools;23.0.2" "platform-tools"
+
     
     - name: Install Android Images
       run: $HOME/Android/Sdk/tools/android avd
