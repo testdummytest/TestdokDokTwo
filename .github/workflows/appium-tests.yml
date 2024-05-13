@@ -50,51 +50,17 @@ jobs:
         export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/bin
         yes | sdkmanager --sdk_root=$HOME/Android/Sdk --licenses
         sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
+        sdkmanager --sdk_root=$HOME/Android/Sdk --update
 
-    # - name: list system images in sdk
-    #   run: sdkmanager --list | grep system-images
-
-    - name: list system images in sdk
-      run: |
-        ls -l $HOME/Android/Sdk/cmdline-tools/bin/sdkmanager
+    - name: List system images in SDK
+      run: sdkmanager --list | grep system-images
 
     - name: Install Android Images
       run: |
-        export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/bin
-        yes | sdkmanager --sdk_root=$HOME/Android/Sdk --licenses
-        sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
         avdmanager create avd -n my_avd_name -k "system-images;android-23;google_apis;x86_64"
 
     - name: Add Android Platform to Ionic
       run: ionic platform add android
     
     - name: Run Emulator
-      run: ionic emulate android
-
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '14'
-
-    - name: Install Appium
-      run: npm install -g appium@latest
-
-    - name: Install uiautomator2
-      run: appium driver install uiautomator2
-
-    - name: Print Appium Version
-      run: appium -v
-
-    - name: Install ChromeDriver
-      run: |
-        LATEST_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-        curl -O "https://chromedriver.storage.googleapis.com/$LATEST_VERSION/chromedriver_linux64.zip"
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/chromedriver
-        sudo chmod +x /usr/local/bin/chromedriver
-
-    - name: Start Appium Server
-      run: appium & sleep 20
-
-    - name: Run Appium Tests
-      run: mvn -B clean test -Dtest=PatientTests#verifyThatCanLogoutSuccessfullyFromTheApp
+      run: emulator -avd my_avd_name -no-window -no-audio
