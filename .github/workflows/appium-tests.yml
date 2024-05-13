@@ -52,7 +52,7 @@ jobs:
         sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
 
     - name: Install Android Images
-      run: $HOME/Android/Sdk/cmdline-tools/latest/bin/avdmanager create avd -n my_avd_name -k "system-images;android-23;google_apis;x86_64"
+      run: $HOME/Android/Sdk/cmdline-tools/bin/avdmanager create avd -n my_avd_name -k "system-images;android-23;google_apis;x86_64"
 
     
     - name: Add Android Platform to Ionic
