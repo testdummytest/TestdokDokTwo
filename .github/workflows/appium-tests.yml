@@ -34,40 +34,14 @@ jobs:
         cd ..
         rm -rf sdkmanager_temp
 
-    - name: List Available Packages
-      run: |
-        ls -l $HOME/Android/Sdk/cmdline-tools/
-
-    - name: List bin data
-      run: |
-        ls -l $HOME/Android/Sdk/cmdline-tools/bin/
-
-    - name: List lib data
-      run: |
-        ls -l $HOME/Android/Sdk/cmdline-tools/lib/
-    
     - name: Set Android SDK Root
       run: echo "ANDROID_SDK_ROOT=$HOME/Android/Sdk" >> $GITHUB_ENV
         
     - name: Install Android SDK Packages
       run: |
         export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/bin
-        sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
-        
-    - name: Set PATH in ~/.bashrc
-      run: echo 'export PATH=$PATH:$HOME/Android/Sdk/platform-tools:$HOME/Android/Sdk/tools:$HOME/Android/Sdk/build-tools/23.0.2/' >> ~/.bashrc
-    
-    - name: Refresh PATH variable and install Android SDK
-      run: |
-        source ~/.bashrc  # Refresh the PATH variable
-        $HOME/Android/Sdk/tools/bin/sdkmanager "platforms;android-23" "build-tools;23.0.2" "platform-tools"
+        sdkmanager "platform-tools" "build-tools;23.0.2" "platforms;android-23"
 
-    
-    - name: Install Desired Android Platforms
-      run: |
-        sdkmanager "platforms;android-23" "build-tools;23.0.2" "platform-tools"
-
-    
     - name: Install Android Images
       run: $HOME/Android/Sdk/tools/android avd
     
