@@ -36,6 +36,10 @@ jobs:
 
     - name: Set Android SDK Root
       run: echo "ANDROID_SDK_ROOT=$HOME/Android/Sdk" >> $GITHUB_ENV
+    
+    - name: List SDK data
+      run: |
+        ls -l $HOME/Android/Sdk/
 
     - name: List bin data
       run: |
