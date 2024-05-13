@@ -37,6 +37,14 @@ jobs:
     - name: List Available Packages
       run: |
         ls -l $HOME/Android/Sdk/cmdline-tools/
+
+    - name: List bin data
+      run: |
+        ls -l $HOME/Android/Sdk/cmdline-tools/bin/
+
+    - name: List lib data
+      run: |
+        ls -l $HOME/Android/Sdk/cmdline-tools/lib/
     
     - name: Install Android SDK Packages
       run: |
