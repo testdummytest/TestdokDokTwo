@@ -48,8 +48,8 @@ jobs:
     
     - name: Install Android SDK Packages
       run: |
-        cd $HOME/Android/cmdline-tools/tools/bin
-        ./android update sdk --no-ui --all --filter "platform-tools,build-tools-23.0.2,android-23"
+        cd $HOME/Android/Sdk/cmdline-tools/lib/bin/
+        sdkmanager "platform-tools" "build-tools;23.0.2" "platforms;android-23"
 
     - name: Set PATH in ~/.bashrc
       run: echo 'export PATH=${PATH}:$HOME/Android/Sdk/platform-tools:$HOME/Android/Sdk/tools:$HOME/Android/Sdk/build-tools/23.0.2/' >> ~/.bashrc
