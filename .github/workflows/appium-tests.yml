@@ -16,17 +16,6 @@ jobs:
 
     - name: Set up JDK
       run: sudo apt-get install openjdk-17-jdk
-        
-    # - name: Install JAXB
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y libjaxb-java
-        
-    # - name: Set JAXB_HOME Environment Variable
-    #   run: echo "export JAXB_HOME=/usr/share/java" >> $GITHUB_ENV
-    
-    # - name: Set JAXB_CLASSPATH Environment Variable
-    #   run: echo "export JAXB_CLASSPATH=$(find $JAXB_HOME -name '*.jar' -printf '%p:')" >> $GITHUB_ENV
 
     - name: Setup Android SDK
       run: |
@@ -69,40 +58,6 @@ jobs:
     
     - name: Run Emulator
       run: ionic emulate android
-        
-    # - name: Available SDK packages in Android SDK
-    #   run: sdkmanager --list | grep system-images
-    # - name: Check Android SDK directory
-    #   run: ls -l $ANDROID_HOME
-      
-    # - name: Install SDK System Image
-    #   run: /usr/local/lib/android/cmdline-tools/tools/bin/sdkmanager --install "system-images;android-30;google_apis_playstore;x86_64"
-      
-    # - name: Check Android SDK directory
-    #   run: ls -l $ANDROID_HOME
-    # - name: Check Android SDK directory 2
-    #   run: ls -l $ANDROID_HOME/cmdline-tools
-    # - name: Check Android SDK directory 3
-    #   run: ls -l $ANDROID_HOME/cmdline-tools/tools
-    # - name: Check Android SDK directory 4
-    #   run: ls -l $ANDROID_HOME/cmdline-tools/tools/bin
-
-    # - name: create AVD 
-    #   run: $ANDROID_HOME/cmdline-tools/tools/bin/avdmanager create avd -d "Nexus 10" -n test1 -k "system-images;android-30;google_apis_playstore;x86_64"
-
-    # - name: List AVD Devices
-    #   run: $ANDROID_HOME/emulator/emulator -list-avds
-
-    # - name: Run AVD Devices
-    #   run: |
-    #     $ANDROID_HOME/emulator/emulator -avd test1 &
-    #     sleep 60  # Adjust sleep time as needed, wait for emulator to fully start
-
-    # - name: List ADB Devices
-    #   run: adb devices
-        
-    # - name: Install Dependencies
-    #   run: mvn install --quiet
 
     - name: Install Node.js
       uses: actions/setup-node@v3
