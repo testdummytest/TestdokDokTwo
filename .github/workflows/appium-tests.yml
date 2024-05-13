@@ -40,7 +40,10 @@ jobs:
     - name: List SDK data
       run: |
         ls -1 $HOME/Android/Sdk/ | awk '{print $1}'
-
+    
+    - name: List cmdline tools
+      run: |
+        ls -l $HOME/Android/Sdk/cmdline-tools/
 
     - name: List bin data
       run: |
