@@ -39,7 +39,8 @@ jobs:
     
     - name: List SDK data
       run: |
-        ls -l $HOME/Android/Sdk/
+        ls -1 $HOME/Android/Sdk/ | awk '{print $1}'
+
 
     - name: List bin data
       run: |
