@@ -56,7 +56,7 @@ jobs:
 
     - name: list system images in sdk
       run: |
-        ls -l $HOME/Android/Sdk/cmdline-tools/bin/sdkmanager/
+        ls -l $HOME/Android/Sdk/cmdline-tools/bin/sdkmanager
 
     - name: Install Android Images
       run: |
