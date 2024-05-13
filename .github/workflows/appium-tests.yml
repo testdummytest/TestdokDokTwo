@@ -21,8 +21,7 @@ jobs:
       run: |
         wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
         tar -xvf android-sdk_r24.2-linux.tgz
-        cd android-sdk-linux/tools
-        ls -l android-sdk-linux/tools
+        cd android-sdk-linux/tools && ls -l
     
     - name: Install SDK Command-line Tools
       run: |
