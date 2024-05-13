@@ -52,8 +52,10 @@ jobs:
         sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
         sdkmanager --sdk_root=$HOME/Android/Sdk --update
 
-    - name: List system images in SDK
-      run: sdkmanager --list | grep system-images
+
+    - name: list system images in sdk
+      run: |
+        ls -l $HOME/Android/Sdk/cmdline-tools/bin/sdkmanager
 
     - name: Install Android Images
       run: |
