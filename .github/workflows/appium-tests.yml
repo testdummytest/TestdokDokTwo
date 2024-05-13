@@ -59,6 +59,9 @@ jobs:
 
     - name: Install Android Images
       run: |
+        export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/bin
+        yes | sdkmanager --sdk_root=$HOME/Android/Sdk --licenses
+        sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
         avdmanager create avd -n my_avd_name -k "system-images;android-23;google_apis;x86_64"
 
     - name: Add Android Platform to Ionic
