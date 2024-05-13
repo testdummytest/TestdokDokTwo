@@ -48,7 +48,7 @@ jobs:
     
     - name: Install Android SDK Packages
       run: |
-        cd $HOME/Android/Sdk/cmdline-tools/lib/bin/
+        cd $HOME/Android/Sdk/cmdline-tools/bin/
         sdkmanager "platform-tools" "build-tools;23.0.2" "platforms;android-23"
 
     - name: Set PATH in ~/.bashrc
