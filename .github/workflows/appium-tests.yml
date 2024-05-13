@@ -40,7 +40,8 @@ jobs:
     - name: Install Android SDK Packages
       run: |
         export PATH=$PATH:$HOME/Android/Sdk/cmdline-tools/bin
-        sdkmanager "platform-tools" "build-tools;23.0.2" "platforms;android-23"
+        sdkmanager --sdk_root=$HOME/Android/Sdk "platform-tools" "build-tools;23.0.2" "platforms;android-23"
+
 
     - name: Install Android Images
       run: $HOME/Android/Sdk/tools/android avd
